@@ -1,9 +1,10 @@
-# collection_template
-You can build a new repository for an Ansible Collection using this template by following [Creating a repository from a template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template). This README.md contains recommended headings for your collection README.md, with comments describing what each section should contain. Once you have created your collection repository, delete this paragraph and the title above it from your README.md.
+# Community SAP Collection
 
-# Foo Collection for Ansible
+This repository contains the community.sap Ansible Collection. The collection includes modules and plugins supported by the Ansible SAP community to help SAP landscape management.
+
+# SAP Collection for Ansible
 <!-- Add CI and code coverage badges here. Samples included below. -->
-[![CI](https://github.com/ansible-collections/REPONAMEHERE/workflows/CI/badge.svg?event=push)](https://github.com/ansible-collections/REPONAMEHERE/actions) [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/REPONAMEHERE)](https://codecov.io/gh/ansible-collections/REPONAMEHERE)
+[![CI](https://github.com/ansible-collections/community.sap/workflows/CI/badge.svg?event=push)](https://github.com/ansible-collections/community.sap/actions) [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/community.sap)](https://codecov.io/gh/ansible-collections/community.sap)
 
 <!-- Describe the collection and why a user would want to use it. What does the collection do? -->
 
@@ -61,18 +62,27 @@ Every voice is important. If you have something on your mind, create an issue or
 
 ## Tested with Ansible
 
-<!-- List the versions of Ansible the collection has been tested with. Must match what is in galaxy.yml. -->
-
+- 2.9
+- 2.10
+- 2.11
+- 2.12
+- devel
 ## External requirements
 
-<!-- List any external resources the collection depends on, for example minimum versions of an OS, libraries, or utilities. Do not list other Ansible collections here. -->
+For some modules the below requirements are needed on the host that executes a module.
+
+- pyrfc >= 2.4.0
+- SAPCAR
 
 ### Supported connections
 <!-- Optional. If your collection supports only specific connection types (such as HTTPAPI, netconf, or others), list them here. -->
 
 ## Included content
 
-<!-- Galaxy will eventually list the module docs within the UI, but until that is ready, you may need to either describe your plugins etc here, or point to an external docsite to cover that information. -->
+- **Modules**:
+  - [hana_query](https://docs.ansible.com/ansible/latest/collections/community/sap/hana_query.html)
+  - [sap_task_list_execute](https://docs.ansible.com/ansible/latest/collections/community/sap/sap_task_list_execute.html)
+  - [sapcar_extract](https://docs.ansible.com/ansible/latest/collections/community/sap/sapcar_extract.html)
 
 ## Using this collection
 
@@ -82,25 +92,25 @@ Every voice is important. If you have something on your mind, create an issue or
 
 Before using this collection, you need to install it with the Ansible Galaxy command-line tool:
 ```bash
-ansible-galaxy collection install NAMESPACE.COLLECTION_NAME
+ansible-galaxy collection install community.sap
 ```
 
 You can also include it in a `requirements.yml` file and install it with `ansible-galaxy collection install -r requirements.yml`, using the format:
 ```yaml
 ---
 collections:
-  - name: NAMESPACE.COLLECTION_NAME
+  - name: community.sap
 ```
 
 Note that if you install the collection from Ansible Galaxy, it will not be upgraded automatically when you upgrade the `ansible` package. To upgrade the collection to the latest available version, run the following command:
 ```bash
-ansible-galaxy collection install NAMESPACE.COLLECTION_NAME --upgrade
+ansible-galaxy collection install community.sap --upgrade
 ```
 
 You can also install a specific version of the collection, for example, if you need to downgrade when something is broken in the latest version (please report an issue in this repository). Use the following syntax to install version `0.1.0`:
 
 ```bash
-ansible-galaxy collection install NAMESPACE.COLLECTION_NAME:==0.1.0
+ansible-galaxy collection install community.sap:==0.1.0
 ```
 
 See [Ansible Using collections](https://docs.ansible.com/ansible/devel/user_guide/collections_using.html) for more details.

@@ -1,1 +1,11 @@
-releases: {}
+ancestor: null
+releases:
+  0.1.0:
+    release_summary: Initial Release 
+    bug_fixes:
+      - 
+    modules:
+      - sapcar_extract
+      - sap_task_list_execute
+      - hana_query
+    release_date: '2021-12-04'   
