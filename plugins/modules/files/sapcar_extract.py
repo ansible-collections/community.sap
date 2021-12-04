@@ -10,7 +10,7 @@ DOCUMENTATION = '''
 ---
 module: sapcar_extract
 short_description: Manages SAP SAPCAR archives
-version_added: "1.0.0"
+version_added: "0.1.0"
 description:
     - Provides support for unpacking C(sar)/C(car) files with the SAPCAR binary from SAP and pulling
       information back into Ansible.
