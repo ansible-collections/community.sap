@@ -95,7 +95,7 @@ author:
 EXAMPLES = r'''
 # Pass in a message
 - name: Test task execution
-  community.general.sap_task_list_execute:
+  community.sap.sap_task_list_execute:
     conn_username: DDIC
     conn_password: Passwd1234
     host: 10.1.8.10
@@ -105,7 +105,7 @@ EXAMPLES = r'''
     task_settings: batch
 
 - name: Pass in input parameters
-  community.general.sap_task_list_execute:
+  community.sap.sap_task_list_execute:
     conn_username: DDIC
     conn_password: Passwd1234
     host: 10.1.8.10
@@ -121,7 +121,7 @@ EXAMPLES = r'''
 
 # Exported environement variables.
 - name: Hint if module will fail with error message like ImportError libsapnwrfc.so...
-  community.general.sap_task_list_execute:
+  community.sap.sap_task_list_execute:
     conn_username: DDIC
     conn_password: Passwd1234
     host: 10.1.8.10

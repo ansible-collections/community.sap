@@ -56,32 +56,32 @@ notes:
 
 EXAMPLES = """
 - name: Extract SAR file
-  community.general.sapcar_extract:
+  community.sap.sapcar_extract:
     path: "~/source/hana.sar"
 
 - name: Extract SAR file with destination
-  community.general.sapcar_extract:
+  community.sap.sapcar_extract:
     path: "~/source/hana.sar"
     dest: "~/test/"
 
 - name: Extract SAR file with destination and download from webserver can be a fileshare as well
-  community.general.sapcar_extract:
+  community.sap.sapcar_extract:
     path: "~/source/hana.sar"
     dest: "~/dest/"
     binary_path: "https://myserver/SAPCAR"
 
 - name: Extract SAR file and delete SAR after extract
-  community.general.sapcar_extract:
+  community.sap.sapcar_extract:
     path: "~/source/hana.sar"
     remove: true
 
 - name: Extract SAR file with manifest
-  community.general.sapcar_extract:
+  community.sap.sapcar_extract:
     path: "~/source/hana.sar"
     signature: true
 
 - name: Extract SAR file with manifest and rename it
-  community.general.sapcar_extract:
+  community.sap.sapcar_extract:
     path: "~/source/hana.sar"
     manifest: "MyNewSignature.SMF"
     signature: true

@@ -72,14 +72,14 @@ author:
 
 EXAMPLES = r'''
 - name: Simple select query
-  community.general.hana_query:
+  community.sap.hana_query:
     sid: "hdb"
     instance: "01"
     password: "Test123"
     query: "select user_name from users"
 
 - name: Run several queries
-  community.general.hana_query:
+  community.sap.hana_query:
     sid: "hdb"
     instance: "01"
     password: "Test123"
@@ -90,7 +90,7 @@ EXAMPLES = r'''
     autocommit: False
 
 - name: Run several queries from file
-  community.general.hana_query:
+  community.sap.hana_query:
     sid: "hdb"
     instance: "01"
     password: "Test123"
@@ -100,7 +100,7 @@ EXAMPLES = r'''
     host: "localhost"
 
 - name: Run several queries from user store
-  community.general.hana_query:
+  community.sap.hana_query:
     sid: "hdb"
     instance: "01"
     user: hdbstoreuser
