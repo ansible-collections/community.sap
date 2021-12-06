@@ -8,4 +8,4 @@ releases:
       - sapcar_extract
       - sap_task_list_execute
       - hana_query
-    release_date: '2021-12-04'   
+    release_date: '2021-12-06'   

@@ -95,7 +95,7 @@ body:
     description: >-
       Provide all relevant information below, e.g. OS version,
       browser, etc.
-    placeholder: Fedora 33, Firefox etc.
+    placeholder: SLES, RHEL
   validations:
     required: false
 

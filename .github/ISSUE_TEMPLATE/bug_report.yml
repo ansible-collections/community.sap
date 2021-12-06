@@ -96,7 +96,7 @@ body:
     description: >-
       Provide all relevant information below, e.g. target OS versions,
       network device firmware, etc.
-    placeholder: RHEL 8, CentOS Stream etc.
+    placeholder: RHEL 8, SLES 
   validations:
     required: false
 
