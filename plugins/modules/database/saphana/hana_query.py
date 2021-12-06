@@ -17,6 +17,10 @@ options:
         description: The system ID.
         type: str
         required: true
+    bin_path:
+        description: The path to hdbsql.
+        type: str
+        required: false
     instance:
         description: The instance number.
         type: str
@@ -136,6 +140,7 @@ def main():
     module = AnsibleModule(
         argument_spec=dict(
             sid=dict(type='str', required=True),
+            bin_path=dict(type='str', required=False),
             instance=dict(type='str', required=True),
             encrypted=dict(type='bool', default=False),
             host=dict(type='str', required=False),
@@ -156,6 +161,7 @@ def main():
     params = module.params
 
     sid = (params['sid']).upper()
+    bin_path = params['bin_path']
     instance = params['instance']
     user = params['user']
     userstore = params['userstore']
@@ -168,7 +174,8 @@ def main():
     filepath = params['filepath']
     query = params['query']
 
-    bin_path = "/usr/sap/{sid}/HDB{instance}/exe/hdbsql".format(sid=sid, instance=instance)
+    if bin_path is None:
+        bin_path = "/usr/sap/{sid}/HDB{instance}/exe/hdbsql".format(sid=sid, instance=instance)
 
     try:
         command = [module.get_bin_path(bin_path, required=True)]
