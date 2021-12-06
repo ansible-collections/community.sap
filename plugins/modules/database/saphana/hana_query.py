@@ -16,9 +16,9 @@ options:
     sid:
         description: The system ID.
         type: str
-        required: true
+        required: false
     bin_path:
-        description: The path to hdbsql.
+        description: The path to the hdbsql binary.
         type: str
         required: false
     instance:
@@ -93,6 +93,17 @@ EXAMPLES = r'''
     host: "localhost"
     autocommit: False
 
+- name: Run several queries with path
+  community.sap.hana_query:
+    bin_path: "/usr/sap/HDB/HDB01/exe/hdbsql"
+    instance: "01"
+    password: "Test123"
+    query:
+    - "select user_name from users;"
+    - select * from users;
+    host: "localhost"
+    autocommit: False
+
 - name: Run several queries from file
   community.sap.hana_query:
     sid: "hdb"
@@ -139,7 +150,7 @@ def csv_to_list(rawcsv):
 def main():
     module = AnsibleModule(
         argument_spec=dict(
-            sid=dict(type='str', required=True),
+            sid=dict(type='str', required=False),
             bin_path=dict(type='str', required=False),
             instance=dict(type='str', required=True),
             encrypted=dict(type='bool', default=False),
@@ -152,7 +163,7 @@ def main():
             filepath=dict(type='list', elements='path', required=False),
             autocommit=dict(type='bool', default=True),
         ),
-        required_one_of=[('query', 'filepath')],
+        required_one_of=[('query', 'filepath'),('sid', 'instance')],
         required_if=[('userstore', False, ['password'])],
         supports_check_mode=False,
     )
@@ -160,7 +171,7 @@ def main():
 
     params = module.params
 
-    sid = (params['sid']).upper()
+    sid = params['sid']
     bin_path = params['bin_path']
     instance = params['instance']
     user = params['user']
@@ -175,7 +186,7 @@ def main():
     query = params['query']
 
     if bin_path is None:
-        bin_path = "/usr/sap/{sid}/HDB{instance}/exe/hdbsql".format(sid=sid, instance=instance)
+        bin_path = "/usr/sap/{sid}/HDB{instance}/exe/hdbsql".format(sid=sid.upper(), instance=instance)
 
     try:
         command = [module.get_bin_path(bin_path, required=True)]
