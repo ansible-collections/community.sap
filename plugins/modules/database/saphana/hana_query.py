@@ -163,7 +163,7 @@ def main():
             filepath=dict(type='list', elements='path', required=False),
             autocommit=dict(type='bool', default=True),
         ),
-        required_one_of=[('query', 'filepath'),('sid', 'instance')],
+        required_one_of=[('query', 'filepath'), ('sid', 'instance')],
         required_if=[('userstore', False, ['password'])],
         supports_check_mode=False,
     )
