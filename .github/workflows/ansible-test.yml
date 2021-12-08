@@ -60,6 +60,8 @@ jobs:
           # Because ansible-test doesn't support python3.9 for Ansible 2.9
           - ansible: stable-2.9
             python: 3.9
+          - ansible: devel
+            python: 2.6
 
     steps:
       - name: Check out code
@@ -104,6 +106,8 @@ jobs:
           # Because ansible-test doesn't support python3.9 for Ansible 2.9
           - ansible: stable-2.9
             python: 3.9
+          - ansible: devel
+            python: 2.6
 
     steps:
       - name: Check out code
@@ -115,7 +119,6 @@ jobs:
           ansible-core-version: ${{ matrix.ansible }}
           python-version: 3.8
           pre-test-cmd: >-
-            pip3 install argparse &&
             mkdir -p tests/output/
             touch tests/output/coverage
           target-python-version: ${{ matrix.python }}
