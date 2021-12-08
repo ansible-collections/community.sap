@@ -6,11 +6,11 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
-DOCUMENTATION = '''
+DOCUMENTATION = r'''
 ---
 module: sapcar_extract
 short_description: Manages SAP SAPCAR archives
-version_added: "0.1.0"
+version_added: "1.0.0"
 description:
     - Provides support for unpacking C(sar)/C(car) files with the SAPCAR binary from SAP and pulling
       information back into Ansible.
@@ -54,7 +54,7 @@ notes:
     - Always returns C(changed=true) in C(check_mode).
 '''
 
-EXAMPLES = """
+EXAMPLES = r"""
 - name: Extract SAR file
   community.sap.sapcar_extract:
     path: "~/source/hana.sar"
