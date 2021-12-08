@@ -115,9 +115,8 @@ jobs:
           ansible-core-version: ${{ matrix.ansible }}
           python-version: 3.8
           pre-test-cmd: >-
-            pip3 install argparse
+            pip3 install argparse &&
             mkdir -p tests/output/
-            touch tests/output/coverage
           target-python-version: ${{ matrix.python }}
           testing-type: integration
           test-deps: >-
