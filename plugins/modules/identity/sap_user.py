@@ -192,7 +192,6 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
-# These are examples of possible return values, and in general should use other names for return values.
 msg:
     description: A small execution description.
     type: str
