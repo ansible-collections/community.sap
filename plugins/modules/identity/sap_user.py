@@ -26,7 +26,7 @@ options:
     state:
         description:
         - The decission what to do with the user.
-        - Could be c('present'), c('absent'), c('')
+        - Could be c('present'), c('absent'), c('lock'), c('unlock')
         default: 'present'
         required: true
         type: str
