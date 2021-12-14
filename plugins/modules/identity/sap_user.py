@@ -93,7 +93,7 @@ options:
     description:
     - The alias for the user in the SAP system.
     type: str
-    required: true
+    required: false
   type:
     description:
     - The type for the user in the SAP system.
@@ -391,7 +391,7 @@ def run_module():
             firstname=dict(type='str', required=False),
             lastname=dict(type='str', required=False),
             email=dict(type='str', required=False),
-            password=dict(type='str', no_log=True),
+            password=dict(type='str', required=False, no_log=True),
             useralias=dict(type='str', required=False),
             type=dict(default="A",
                       choices=['A', 'B', 'C', 'S', 'L']),
