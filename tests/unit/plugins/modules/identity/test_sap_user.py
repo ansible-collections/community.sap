@@ -56,11 +56,8 @@ class TestSAPRfcModule(ModuleTestCase):
                                                 'MESSAGE_V2': '', 'MESSAGE_V3': '', 'MESSAGE_V4': '', 'NUMBER': '199',
                                                 'PARAMETER': '', 'ROW': 0, 'SYSTEM': '', 'TYPE': 'E'}]}
 
-                with patch.object(self.module, 'return_analysis') as RET:
-                    RET.return_value = [{"change": False}, {"failed": True}]
-
-                    with self.assertRaises(AnsibleFailJson) as result:
-                        sap_user.main()
+                with self.assertRaises(AnsibleFailJson) as result:
+                    sap_user.main()
         self.assertEqual(result.exception.args[0]['msg'], 'Something went wrong')
 
     def test_success(self):
@@ -87,9 +84,110 @@ class TestSAPRfcModule(ModuleTestCase):
                                                 'MESSAGE_V2': '', 'MESSAGE_V3': '', 'MESSAGE_V4': '', 'NUMBER': '102',
                                                 'PARAMETER': '', 'ROW': 0, 'SYSTEM': '', 'TYPE': 'S'}]}
 
-                with patch.object(self.module, 'return_analysis') as RET:
-                    RET.return_value = [{"change": True}, {"failed": False}]
+                with self.assertRaises(AnsibleExitJson) as result:
+                    sap_user.main()
+        self.assertEqual(result.exception.args[0]['msg'], 'User ADMIN created')
+
+
+    def test_no_changes(self):
+        """test execute user no changes"""
+
+        set_module_args({
+            "conn_username": "DDIC",
+            "conn_password": "Test1234",
+            "host": "10.1.8.9",
+            "username": "ADMIN",
+            "firstname": "first_admin",
+            "lastname": "last_admin",
+            "email": "admin@test.de",
+            "password": "Test123456",
+            "useralias": "ADMIN",
+            "company": "DEFAULT_COMPANY"
+        })
+        with patch.object(self.module, 'check_user') as check:
+            check.return_value = True
+
+            with patch.object(self.module, 'call_rfc_method') as RAW:
+                RAW.return_value = {'RETURN': [{'FIELD': 'BNAME', 'ID': '01', 'LOG_MSG_NO': '000000',
+                                                'LOG_NO': '', 'MESSAGE': '', 'MESSAGE_V1': 'ADMIN',
+                                                'MESSAGE_V2': '', 'MESSAGE_V3': '', 'MESSAGE_V4': '', 'NUMBER': '029',
+                                                'PARAMETER': '', 'ROW': 0, 'SYSTEM': '', 'TYPE': 'S'}]}
+
+                with patch.object(self.module, 'all') as DETAIL:
+                    DETAIL.return_value = True
 
                     with self.assertRaises(AnsibleExitJson) as result:
                         sap_user.main()
-        self.assertEqual(result.exception.args[0]['msg'], 'User ADMIN created')
+        self.assertEqual(result.exception.args[0]['msg'], 'No changes where made.')
+
+
+    def test_absent(self):
+        """test execute user delete success"""
+
+        set_module_args({
+            "state": "absent",
+            "conn_username": "DDIC",
+            "conn_password": "Test1234",
+            "host": "10.1.8.9",
+            "username": "ADMIN",
+        })
+        with patch.object(self.module, 'check_user') as check:
+            check.return_value = True
+
+            with patch.object(self.module, 'call_rfc_method') as RAW:
+                RAW.return_value = {'RETURN': [{'FIELD': 'BNAME', 'ID': '01', 'LOG_MSG_NO': '000000',
+                                                'LOG_NO': '', 'MESSAGE': 'User ADMIN deleted', 'MESSAGE_V1': 'ADMIN',
+                                                'MESSAGE_V2': '', 'MESSAGE_V3': '', 'MESSAGE_V4': '', 'NUMBER': '102',
+                                                'PARAMETER': '', 'ROW': 0, 'SYSTEM': '', 'TYPE': 'S'}]}
+
+                with self.assertRaises(AnsibleExitJson) as result:
+                    sap_user.main()
+        self.assertEqual(result.exception.args[0]['msg'], 'User ADMIN deleted')
+
+
+    def test_lock(self):
+        """test execute user lock success"""
+
+        set_module_args({
+            "state": "lock",
+            "conn_username": "DDIC",
+            "conn_password": "Test1234",
+            "host": "10.1.8.9",
+            "username": "ADMIN",
+        })
+        with patch.object(self.module, 'check_user') as check:
+            check.return_value = True
+
+            with patch.object(self.module, 'call_rfc_method') as RAW:
+                RAW.return_value = {'RETURN': [{'FIELD': 'BNAME', 'ID': '01', 'LOG_MSG_NO': '000000',
+                                                'LOG_NO': '', 'MESSAGE': 'User ADMIN locked', 'MESSAGE_V1': 'ADMIN',
+                                                'MESSAGE_V2': '', 'MESSAGE_V3': '', 'MESSAGE_V4': '', 'NUMBER': '206',
+                                                'PARAMETER': '', 'ROW': 0, 'SYSTEM': '', 'TYPE': 'S'}]}
+
+                with self.assertRaises(AnsibleExitJson) as result:
+                    sap_user.main()
+        self.assertEqual(result.exception.args[0]['msg'], 'User ADMIN locked')
+
+
+    def test_unlock(self):
+        """test execute user lock success"""
+
+        set_module_args({
+            "state": "lock",
+            "conn_username": "DDIC",
+            "conn_password": "Test1234",
+            "host": "10.1.8.9",
+            "username": "ADMIN",
+        })
+        with patch.object(self.module, 'check_user') as check:
+            check.return_value = True
+
+            with patch.object(self.module, 'call_rfc_method') as RAW:
+                RAW.return_value = {'RETURN': [{'FIELD': 'BNAME', 'ID': '01', 'LOG_MSG_NO': '000000',
+                                                'LOG_NO': '', 'MESSAGE': 'User ADMIN unlocked', 'MESSAGE_V1': 'ADMIN',
+                                                'MESSAGE_V2': '', 'MESSAGE_V3': '', 'MESSAGE_V4': '', 'NUMBER': '210',
+                                                'PARAMETER': '', 'ROW': 0, 'SYSTEM': '', 'TYPE': 'S'}]}
+
+                with self.assertRaises(AnsibleExitJson) as result:
+                    sap_user.main()
+        self.assertEqual(result.exception.args[0]['msg'], 'User ADMIN unlocked')

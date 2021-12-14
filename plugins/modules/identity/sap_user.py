@@ -423,7 +423,8 @@ def run_module():
     email = params['email']
     password = params['password']
     force = params['force']
-    useralias = (params['useralias']).upper()
+    if not params['useralias'] is None:
+      useralias = (params['useralias']).upper()
     type = (params['type']).upper()
     company = params['company']
 
@@ -458,8 +459,8 @@ def run_module():
 
         if user_exists:
             # check for address changes when user exsits
-            equal = all((user_detail.get('ADDRESS')).get(k) == v for k, v in (user_params.get('ADDRESS')).items())
-            if not equal or force:
+            user_no_changes = all((user_detail.get('ADDRESS')).get(k) == v for k, v in (user_params.get('ADDRESS')).items())
+            if not user_no_changes or force:
                 raw = call_rfc_method(conn, 'BAPI_USER_CHANGE', user_params)
 
         call_rfc_method(conn, 'BAPI_USER_ACTGROUPS_ASSIGN', user_role_assignment_build_rfc_params(roles, username))
@@ -475,15 +476,19 @@ def run_module():
             raw = call_rfc_method(conn, 'BAPI_USER_LOCK', {'USERNAME': username})
 
     # analyse return value
-    analysed = return_analysis(raw)
+    if raw != '':
+        analysed = return_analysis(raw)
+      
+        result['out'] = raw
+      
+        result['changed'] = analysed[0]['change']
+        result['msg'] = raw['RETURN'][0]['MESSAGE']
 
-    result['out'] = raw
+        if analysed[1]['failed']:
+            module.fail_json(**result)
+    else:
+        result['msg'] = "No changes where made."
 
-    result['changed'] = analysed[0]['change']
-    result['msg'] = raw['RETURN'][0]['MESSAGE']
-
-    if analysed[1]['failed']:
-        module.fail_json(**result)
 
     module.exit_json(**result)
 
