@@ -478,9 +478,9 @@ def run_module():
     # analyse return value
     if raw != '':
         analysed = return_analysis(raw)
-      
+
         result['out'] = raw
-      
+
         result['changed'] = analysed[0]['change']
         result['msg'] = raw['RETURN'][0]['MESSAGE']
 
