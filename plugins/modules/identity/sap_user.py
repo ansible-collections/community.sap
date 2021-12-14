@@ -424,7 +424,7 @@ def run_module():
     password = params['password']
     force = params['force']
     if not params['useralias'] is None:
-      useralias = (params['useralias']).upper()
+        useralias = (params['useralias']).upper()
     type = (params['type']).upper()
     company = params['company']
 
@@ -488,7 +488,6 @@ def run_module():
             module.fail_json(**result)
     else:
         result['msg'] = "No changes where made."
-
 
     module.exit_json(**result)
 

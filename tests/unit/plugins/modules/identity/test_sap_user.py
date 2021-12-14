@@ -88,7 +88,6 @@ class TestSAPRfcModule(ModuleTestCase):
                     sap_user.main()
         self.assertEqual(result.exception.args[0]['msg'], 'User ADMIN created')
 
-
     def test_no_changes(self):
         """test execute user no changes"""
 
@@ -120,7 +119,6 @@ class TestSAPRfcModule(ModuleTestCase):
                         sap_user.main()
         self.assertEqual(result.exception.args[0]['msg'], 'No changes where made.')
 
-
     def test_absent(self):
         """test execute user delete success"""
 
@@ -144,7 +142,6 @@ class TestSAPRfcModule(ModuleTestCase):
                     sap_user.main()
         self.assertEqual(result.exception.args[0]['msg'], 'User ADMIN deleted')
 
-
     def test_lock(self):
         """test execute user lock success"""
 
@@ -167,7 +164,6 @@ class TestSAPRfcModule(ModuleTestCase):
                 with self.assertRaises(AnsibleExitJson) as result:
                     sap_user.main()
         self.assertEqual(result.exception.args[0]['msg'], 'User ADMIN locked')
-
 
     def test_unlock(self):
         """test execute user lock success"""
