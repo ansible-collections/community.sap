@@ -11,116 +11,118 @@ __metaclass__ = type
 DOCUMENTATION = r'''
 ---
 module: community.sap.sap_user
-
 short_description: This module will manage a user entities in a SAP S4/HANA environment.
-
 version_added: "1.1.0"
-
 description:
-    - The C(sap_user) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
-        Depending on distribution you are using, you may need to install additional packages to
-        have these available.
-    - This module will use the user BAPIs to manage user entities.
-
+  - The C(sap_user) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
+    Depending on distribution you are using, you may need to install additional packages to
+    have these available.
+  - This module will use the following user BAPIs to manage user entities.
+    - C(BAPI_USER_GET_DETAIL)
+    - C(BAPI_USER_DELETE)
+    - C(BAPI_USER_CREATE1)
+    - C(BAPI_USER_CHANGE)
+    - C(BAPI_USER_ACTGROUPS_ASSIGN)
+    - C(BAPI_USER_PROFILES_ASSIGN)
+    - C(BAPI_USER_UNLOCK)
+    - C(BAPI_USER_LOCK)
 options:
-    state:
-        description:
-        - The decission what to do with the user.
-        - Could be c('present'), c('absent'), c('lock'), c('unlock')
-        default: 'present'
-        required: true
-        type: str
-    force:
-        description:
-        - Must be c('True') if the password or type should be overwritten.
-        default: False
-        required: False
-        type: str
-    conn_username:
-        description: The required username for the SAP system.
-        required: true
-        type: str
-    conn_password:
-        description: The required password for the SAP system.
-        required: true
-        type: str
-    host:
-        description: The required host for the SAP system. Can be either an FQDN or IP Address.
-        required: true
-        type: str
-    sysnr:
-        description:
-        - The system number of the SAP system.
-        - You must quote the value to ensure retaining the leading zeros.
-        default: '00'
-        type: str
-    client:
-        description:
-        - The client number to connect to.
-        - You must quote the value to ensure retaining the leading zeros.
-        default: '000'
-        type: str
-    username:
-        description:
-        - The username.
-        type: str
-        required: true
-    firstname:
-        description:
-        - The Firstname of the user in the SAP system.
-        type: str
-        required: false
-    lastname:
-        description:
-        - The lastname of the user in the SAP system.
-        type: str
-        required: false
-    email:
-        description:
-        - The email address of the user in the SAP system.
-        type: str
-        required: false
-    password:
-        description:
-        - The password for the user in the SAP system.
-        type: str
-        required: false
-    useralias:
-        description:
-        - The alias for the user in the SAP system.
-        type: str
-        required: true
-    type:
-        description:
-        - The type for the user in the SAP system.
-        -  c('A') Dialog user, c('B') System User, c('C') Communication User, c('S') Service User, c('L') Reference User
-        - Must be uppercase
-        type: str
-        required: true
-        default: 'A'
-        choices: 'A', 'B', 'C', 'S', 'L'
-    company:
-        description
-        - The specific company the user belongs to.
-        - The company name must be available in the SAP system.
-        type: str
-        default: ""
-    profiles:
-        description
-        - Assign profiles to the user.
-        - Should be uppercase
-        - for example c('SAP_NEW') or c('SAP_ALL')
-        type: list
-        default: [""]
-    roles:
-        description
-        - Assign roles to the user.
-        type: list
-        default: [""]
-
+  state:
+    description:
+    - The decission what to do with the user.
+    - Could be C('present'), C('absent'), C('lock'), C('unlock')
+    default: 'present'
+    required: true
+    type: str
+  force:
+    description:
+    - Must be c('True') if the password or type should be overwritten.
+    default: False
+    required: False
+    type: str
+  conn_username:
+    description: The required username for the SAP system.
+    required: true
+    type: str
+  conn_password:
+    description: The required password for the SAP system.
+    required: true
+    type: str
+  host:
+    description: The required host for the SAP system. Can be either an FQDN or IP Address.
+    required: true
+    type: str
+  sysnr:
+    description:
+    - The system number of the SAP system.
+    - You must quote the value to ensure retaining the leading zeros.
+    default: '00'
+    type: str
+  client:
+    description:
+    - The client number to connect to.
+    - You must quote the value to ensure retaining the leading zeros.
+    default: '000'
+    type: str
+  username:
+    description:
+    - The username.
+    type: str
+    required: true
+  firstname:
+    description:
+    - The Firstname of the user in the SAP system.
+    type: str
+    required: false
+  lastname:
+    description:
+    - The lastname of the user in the SAP system.
+    type: str
+    required: false
+  email:
+    description:
+    - The email address of the user in the SAP system.
+    type: str
+    required: false
+  password:
+    description:
+    - The password for the user in the SAP system.
+    type: str
+    required: false
+  useralias:
+    description:
+    - The alias for the user in the SAP system.
+    type: str
+    required: true
+  type:
+    description:
+    - The type for the user in the SAP system.
+    -  C('A') Dialog user, C('B') System User, C('C') Communication User, C('S') Service User, C('L') Reference User
+    - Must be uppercase
+    type: str
+    required: true
+    default: 'A'
+    choices: 'A', 'B', 'C', 'S', 'L'
+  company:
+    description
+    - The specific company the user belongs to.
+    - The company name must be available in the SAP system.
+    type: str
+    default: ""
+  profiles:
+    description
+    - Assign profiles to the user.
+    - Should be uppercase
+    - for example C('SAP_NEW') or C('SAP_ALL')
+    type: list
+    default: [""]
+  roles:
+    description
+    - Assign roles to the user.
+    type: list
+    default: [""]
 requirements:
     - pyrfc >= 2.4.0
-
 author:
     - Rainer Leber (@rainerleber)
 '''
@@ -188,41 +190,39 @@ EXAMPLES = r'''
     state: unlock
     force: true
     username: ADMIN
-
 '''
 
 RETURN = r'''
 msg:
-    description: A small execution description.
-    type: str
-    returned: always
-    sample: 'User ADMIN created'
+  description: A small execution description.
+  type: str
+  returned: always
+  sample: 'User ADMIN created'
 out:
-    description: A more detailed description.
-    type: list
-    elements: dict
-    returned: on success
-    sample: [...,{
-                "RETURN": [
-              {
-                  "FIELD": "BNAME",
-                  "ID": "01",
-                  "LOG_MSG_NO": "000000",
-                  "LOG_NO": "",
-                  "MESSAGE": "User ADMIN created",
-                  "MESSAGE_V1": "ADMIN",
-                  "MESSAGE_V2": "",
-                  "MESSAGE_V3": "",
-                  "MESSAGE_V4": "",
-                  "NUMBER": "102",
-                  "PARAMETER": "",
-                  "ROW": 0,
-                  "SYSTEM": "",
-                  "TYPE": "S"
-              }
+  description: A more detailed description.
+  type: list
+  elements: dict
+  returned: on success
+  sample: [...,{
+              "RETURN": [
+            {
+                "FIELD": "BNAME",
+                "ID": "01",
+                "LOG_MSG_NO": "000000",
+                "LOG_NO": "",
+                "MESSAGE": "User ADMIN created",
+                "MESSAGE_V1": "ADMIN",
+                "MESSAGE_V2": "",
+                "MESSAGE_V3": "",
+                "MESSAGE_V4": "",
+                "NUMBER": "102",
+                "PARAMETER": "",
+                "ROW": 0,
+                "SYSTEM": "",
+                "TYPE": "S"
+            }
           ],
           "SAPUSER_UUID_HIST": []}]
-
 '''
 import datetime
 try:
@@ -417,14 +417,14 @@ def run_module():
     sysnr = params['sysnr']
     client = params['client']
 
-    username = params['username'].upper()
+    username = (params['username']).upper()
     firstname = params['firstname']
     lastname = params['lastname']
     email = params['email']
     password = params['password']
     force = params['force']
-    useralias = params['useralias'].upper()
-    type = params['type']
+    useralias = (params['useralias']).upper()
+    type = (params['type']).upper()
     company = params['company']
 
     profiles = params['profiles']
