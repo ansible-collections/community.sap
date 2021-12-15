@@ -8,7 +8,7 @@ __metaclass__ = type
 
 DOCUMENTATION = r'''
 ---
-module: community.sap.sap_company
+module: sap_company
 
 short_description: This module will manage a company entities in a SAP S4/HANA environment.
 
@@ -136,7 +136,7 @@ def run_module():
             # logical values
             state = dict(default='present', choices=['absent', 'present']),
             # values for connection
-            conn_username=dict(type='str', required=True, default="DDIC"),
+            conn_username=dict(type='str', required=True),
             conn_password=dict(type='str', required=True, no_log=True),
             host=dict(type='str', required=True),
             sysnr=dict(type='str', default="01"),
