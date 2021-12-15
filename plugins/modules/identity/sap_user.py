@@ -4,13 +4,11 @@
 # Copyright: (c) 2021, Rainer Leber <rainerleber@gmail.com> <rainer.leber@sva.de>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import (absolute_import, division, print_function)
-import traceback
-from ansible.module_utils.basic import AnsibleModule, missing_required_lib
 __metaclass__ = type
 
 DOCUMENTATION = r'''
 ---
-module: community.sap.sap_user
+module: sap_user
 short_description: This module will manage a user entities in a SAP S4/HANA environment.
 version_added: "1.1.0"
 description:
@@ -27,100 +25,110 @@ description:
     - C(BAPI_USER_UNLOCK)
     - C(BAPI_USER_LOCK)
 options:
-  state:
-    description:
-    - The decission what to do with the user.
-    - Could be C('present'), C('absent'), C('lock'), C('unlock')
-    default: 'present'
-    required: true
-    type: str
-  force:
-    description:
-    - Must be c('True') if the password or type should be overwritten.
-    default: False
-    required: False
-    type: str
-  conn_username:
-    description: The required username for the SAP system.
-    required: true
-    type: str
-  conn_password:
-    description: The required password for the SAP system.
-    required: true
-    type: str
-  host:
-    description: The required host for the SAP system. Can be either an FQDN or IP Address.
-    required: true
-    type: str
-  sysnr:
-    description:
-    - The system number of the SAP system.
-    - You must quote the value to ensure retaining the leading zeros.
-    default: '00'
-    type: str
-  client:
-    description:
-    - The client number to connect to.
-    - You must quote the value to ensure retaining the leading zeros.
-    default: '000'
-    type: str
-  username:
-    description:
-    - The username.
-    type: str
-    required: true
-  firstname:
-    description:
-    - The Firstname of the user in the SAP system.
-    type: str
-    required: false
-  lastname:
-    description:
-    - The lastname of the user in the SAP system.
-    type: str
-    required: false
-  email:
-    description:
-    - The email address of the user in the SAP system.
-    type: str
-    required: false
-  password:
-    description:
-    - The password for the user in the SAP system.
-    type: str
-    required: false
-  useralias:
-    description:
-    - The alias for the user in the SAP system.
-    type: str
-    required: false
-  type:
-    description:
-    - The type for the user in the SAP system.
-    -  C('A') Dialog user, C('B') System User, C('C') Communication User, C('S') Service User, C('L') Reference User
-    - Must be uppercase
-    type: str
-    required: true
-    default: 'A'
-    choices: 'A', 'B', 'C', 'S', 'L'
-  company:
-    description
-    - The specific company the user belongs to.
-    - The company name must be available in the SAP system.
-    type: str
-    default: ""
-  profiles:
-    description
-    - Assign profiles to the user.
-    - Should be uppercase
-    - for example C('SAP_NEW') or C('SAP_ALL')
-    type: list
-    default: [""]
-  roles:
-    description
-    - Assign roles to the user.
-    type: list
-    default: [""]
+    state:
+        description:
+          - The decission what to do with the user.
+          - Could be C('present'), C('absent'), C('lock'), C('unlock')
+        default: 'present'
+        choices:
+          - 'present'
+          - 'absent'
+          - 'lock'
+          - 'unlock'
+        required: false
+        type: str
+    force:
+        description:
+          - Must be c('True') if the password or type should be overwritten.
+        default: False
+        required: False
+        type: bool
+    conn_username:
+        description: The required username for the SAP system.
+        required: true
+        type: str
+    conn_password:
+        description: The required password for the SAP system.
+        required: true
+        type: str
+    host:
+        description: The required host for the SAP system. Can be either an FQDN or IP Address.
+        required: true
+        type: str
+    sysnr:
+        description:
+          - The system number of the SAP system.
+          - You must quote the value to ensure retaining the leading zeros.
+        default: '00'
+        type: str
+    client:
+        description:
+          - The client number to connect to.
+          - You must quote the value to ensure retaining the leading zeros.
+        default: '000'
+        type: str
+    username:
+        description:
+          - The username.
+        type: str
+        required: true
+    firstname:
+        description:
+          - The Firstname of the user in the SAP system.
+        type: str
+        required: false
+    lastname:
+        description:
+          - The lastname of the user in the SAP system.
+        type: str
+        required: false
+    email:
+        description:
+          - The email address of the user in the SAP system.
+        type: str
+        required: false
+    password:
+        description:
+          - The password for the user in the SAP system.
+        type: str
+        required: false
+    useralias:
+        description:
+          - The alias for the user in the SAP system.
+        type: str
+        required: false
+    user_type:
+        description:
+          - The type for the user in the SAP system.
+          - C('A') Dialog user, C('B') System User, C('C') Communication User, C('S') Service User, C('L') Reference User
+          - Must be uppercase
+        type: str
+        required: false
+        default: 'A'
+        choices: ['A', 'B', 'C', 'S', 'L']
+    company:
+        description:
+          - The specific company the user belongs to.
+          - The company name must be available in the SAP system.
+        type: str
+        required: false
+    profiles:
+        description:
+          - Assign profiles to the user.
+          - Should be uppercase
+          - for example C('SAP_NEW') or C('SAP_ALL')
+        type: list
+        elements: str
+        default: ['']
+        required: false
+    roles:
+        description:
+          - Assign roles to the user.
+        type: list
+        elements: str
+        default: ['']
+        required: false
+
 requirements:
     - pyrfc >= 2.4.0
 author:
@@ -224,6 +232,8 @@ out:
           ],
           "SAPUSER_UUID_HIST": []}]
 '''
+from ansible.module_utils.basic import AnsibleModule, missing_required_lib
+import traceback
 import datetime
 try:
     from pyrfc import Connection
@@ -393,14 +403,14 @@ def run_module():
             email=dict(type='str', required=False),
             password=dict(type='str', required=False, no_log=True),
             useralias=dict(type='str', required=False),
-            type=dict(default="A",
-                      choices=['A', 'B', 'C', 'S', 'L']),
+            user_type=dict(default="A",
+                           choices=['A', 'B', 'C', 'S', 'L']),
             company=dict(type='str', required=False),
             # values for profile must a list
             # Example ["SAP_NEW", "SAP_ALL"]
-            profiles=dict(type='list', default=[""]),
+            profiles=dict(type='list', elements='str', default=[""]),
             # values for roles must a list
-            roles=dict(type='list', default=[""]),
+            roles=dict(type='list', elements='str', default=[""]),
         ),
         supports_check_mode=False,
         required_if=[('state', 'present', ['useralias', 'company'])]
@@ -425,7 +435,7 @@ def run_module():
     force = params['force']
     if not params['useralias'] is None:
         useralias = (params['useralias']).upper()
-    type = (params['type']).upper()
+    user_type = (params['user_type']).upper()
     company = params['company']
 
     profiles = params['profiles']
@@ -453,7 +463,7 @@ def run_module():
             raw = call_rfc_method(conn, 'BAPI_USER_DELETE', {'USERNAME': username})
 
     if state == "present":
-        user_params = build_rfc_user_params(username, firstname, lastname, email, password, useralias, type, company, user_exists)
+        user_params = build_rfc_user_params(username, firstname, lastname, email, password, useralias, user_type, company, user_exists)
         if not user_exists:
             raw = call_rfc_method(conn, 'BAPI_USER_CREATE1', user_params)
 
