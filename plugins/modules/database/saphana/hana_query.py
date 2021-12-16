@@ -10,7 +10,7 @@ DOCUMENTATION = r'''
 ---
 module: hana_query
 short_description: Execute SQL on HANA
-version_added: "1.0.0"
+version_added: "0.1.0"
 description: This module executes SQL statements on HANA with hdbsql.
 options:
     sid:
