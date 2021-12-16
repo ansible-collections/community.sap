@@ -10,7 +10,7 @@ DOCUMENTATION = r'''
 ---
 module: hana_query
 short_description: Execute SQL on HANA
-version_added: "1.0.0"
+version_added: "0.1.0"
 description: This module executes SQL statements on HANA with hdbsql.
 options:
     sid:
@@ -191,7 +191,7 @@ def main():
     try:
         command = [module.get_bin_path(bin_path, required=True)]
     except Exception as e:
-        module.fail_json(msg='Failed to find hdbsql at the expected path "{0}". Please check SID and instance number: "{1}"'.format(bin_path, to_native(e)))
+        module.fail_json(msg='Failed to find hdbsql at the expected path "{0}".Please check SID and instance number: "{1}"'.format(bin_path, to_native(e)))
 
     if encrypted is True:
         command.extend(['-attemptencrypt'])

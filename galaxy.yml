@@ -2,14 +2,13 @@
 
 namespace: community
 name: sap
-version: 1.0.0
+version: 0.1.0
 readme: README.md
 authors:
   - Rainer Leber (github.com/rainerleber)
 description: SAP community collection for Ansible
 license_file: LICENSE
 tags:
-  - community
   - sap
 repository: https://github.com/ansible-collections/community.sap
 documentation: https://github.com/ansible-collection/community.sap/tree/main/docs

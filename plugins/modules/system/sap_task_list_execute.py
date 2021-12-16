@@ -10,7 +10,7 @@ DOCUMENTATION = r'''
 ---
 module: sap_task_list_execute
 short_description: Perform SAP Task list execution
-version_added: "1.0.0"
+version_added: "0.1.0"
 description:
   - The C(sap_task_list_execute) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
     Depending on distribution you are using, you may need to install additional packages to
