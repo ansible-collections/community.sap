@@ -9,7 +9,6 @@ authors:
 description: SAP community collection for Ansible
 license_file: LICENSE
 tags:
-  - community
   - sap
 repository: https://github.com/ansible-collections/community.sap
 documentation: https://github.com/ansible-collection/community.sap/tree/main/docs
