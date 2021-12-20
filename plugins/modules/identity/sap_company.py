@@ -23,7 +23,7 @@ description:
 options:
     state:
         description:
-        - The decission what to do with the company.
+        - The decision what to do with the company.
         - Could be C('present'), C('absent')
         default: 'present'
         choices:
