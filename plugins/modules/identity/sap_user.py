@@ -10,7 +10,7 @@ DOCUMENTATION = r'''
 ---
 module: sap_user
 short_description: This module will manage a user entities in a SAP S4/HANA environment.
-version_added: "1.1.0"
+version_added: "0.2.0"
 description:
   - The C(sap_user) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
     Depending on distribution you are using, you may need to install additional packages to
@@ -39,9 +39,9 @@ options:
         type: str
     force:
         description:
-          - Must be c('True') if the password or type should be overwritten.
+          - Must be C('True') if the password or type should be overwritten.
         default: False
-        required: False
+        required: false
         type: bool
     conn_username:
         description: The required username for the SAP system.
@@ -290,7 +290,6 @@ def build_rfc_user_params(username, firstname, lastname, email, raw_password,
     add_to_dict(logondata, 'USTYP', user_type)
     # define company
     add_to_dict(company, 'COMPANY', raw_company)
-    #
     params['LOGONDATA'] = logondata
     params['ADDRESS'] = address
     params['COMPANY'] = company
@@ -307,20 +306,17 @@ def build_rfc_user_params(username, firstname, lastname, email, raw_password,
         add_to_dict(logondatax, 'USTYP', 'X')
         # define company
         add_to_dict(companyx, 'COMPANY', 'X')
-        #
         params['LOGONDATAX'] = logondatax
         params['ADDRESSX'] = addressx
         params['COMPANYX'] = companyx
         params['PASSWORDX'] = passwordx
-    # return dict
     return params
 
 
-# profiles & roles must a LIST
 def user_role_assignment_build_rfc_params(roles, username):
     rfc_table = []
 
-    if not roles:
+    if len(roles)==0:
         return None
 
     for role_name in roles:
@@ -340,9 +336,6 @@ def user_role_assignment_build_rfc_params(roles, username):
 def user_profile_assignment_build_rfc_params(profiles, username):
     rfc_table = []
 
-    if not profiles:
-        return None
-
     for profile_name in profiles:
         table_row = {'BAPIPROF': profile_name}
         rfc_table.append(table_row)
@@ -354,8 +347,7 @@ def user_profile_assignment_build_rfc_params(profiles, username):
 
 
 def check_user(user_detail):
-    # MESSAGE return 'User XXXX does not exist'
-    if user_detail['RETURN']:
+    if len(user_detail['RETURN'])>0:
         for sub in user_detail['RETURN']:
             if sub['NUMBER'] == '124':
                 return False
@@ -383,7 +375,6 @@ def return_analysis(raw):
 
 
 def run_module():
-    # define available arguments/parameters a user can pass to the module
     module = AnsibleModule(
         argument_spec=dict(
             # logical values
@@ -492,7 +483,7 @@ def run_module():
         result['out'] = raw
 
         result['changed'] = analysed[0]['change']
-        result['msg'] = raw['RETURN'][0]['MESSAGE']
+        for msgs in raw['RETURN']: result['msg'] = result['msg'] + msgs['MESSAGE'] + '\n'
 
         if analysed[1]['failed']:
             module.fail_json(**result)
