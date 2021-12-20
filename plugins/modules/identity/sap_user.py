@@ -316,9 +316,6 @@ def build_rfc_user_params(username, firstname, lastname, email, raw_password,
 def user_role_assignment_build_rfc_params(roles, username):
     rfc_table = []
 
-    if len(roles)==0:
-        return None
-
     for role_name in roles:
         table_row = {'AGR_NAME': role_name}
 
