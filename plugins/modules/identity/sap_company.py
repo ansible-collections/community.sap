@@ -12,7 +12,7 @@ module: sap_company
 
 short_description: This module will manage a company entities in a SAP S4HANA environment.
 
-version_added: "1.1.0"
+version_added: "0.2.0"
 
 description:
     - The C(sap_user) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
