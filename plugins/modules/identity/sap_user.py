@@ -259,7 +259,7 @@ def call_rfc_method(connection, method_name, kwargs):
 
 
 def build_rfc_user_params(username, firstname, lastname, email, raw_password,
-                          useralias, user_type, raw_company, user_change):
+                          useralias, user_type, raw_company, user_change, force):
     """Creates RFC parameters for Creating users"""
     # define dicts in batch
     params = dict()
@@ -273,7 +273,6 @@ def build_rfc_user_params(username, firstname, lastname, email, raw_password,
     passwordx = dict()
     logondatax = dict()
     companyx = dict()
-    force = bool()
     # define username
     add_to_dict(params, 'USERNAME', username)
     # define Address
@@ -451,12 +450,12 @@ def run_module():
             raw = call_rfc_method(conn, 'BAPI_USER_DELETE', {'USERNAME': username})
 
     if state == "present":
-        user_params = build_rfc_user_params(username, firstname, lastname, email, password, useralias, user_type, company, user_exists)
+        user_params = build_rfc_user_params(username, firstname, lastname, email, password, useralias, user_type, company, user_exists, force)
         if not user_exists:
             raw = call_rfc_method(conn, 'BAPI_USER_CREATE1', user_params)
 
         if user_exists:
-            # check for address changes when user exsits
+            # check for address changes when user exists
             user_no_changes = all((user_detail.get('ADDRESS')).get(k) == v for k, v in (user_params.get('ADDRESS')).items())
             if not user_no_changes or force:
                 raw = call_rfc_method(conn, 'BAPI_USER_CHANGE', user_params)
