@@ -343,7 +343,7 @@ def user_profile_assignment_build_rfc_params(profiles, username):
 
 
 def check_user(user_detail):
-    if len(user_detail['RETURN'])>0:
+    if len(user_detail['RETURN']) > 0:
         for sub in user_detail['RETURN']:
             if sub['NUMBER'] == '124':
                 return False
@@ -403,6 +403,7 @@ def run_module():
         required_if=[('state', 'present', ['useralias', 'company'])]
     )
     result = dict(changed=False, msg='', out='')
+    count = 0
     raw = ""
 
     params = module.params
@@ -479,7 +480,11 @@ def run_module():
         result['out'] = raw
 
         result['changed'] = analysed[0]['change']
-        for msgs in raw['RETURN']: result['msg'] = result['msg'] + msgs['MESSAGE'] + '\n'
+        for msgs in raw['RETURN']:
+            if count > 0:
+                result['msg'] = result['msg'] + '\n'
+            result['msg'] = result['msg'] + msgs['MESSAGE']
+            count = count + 1
 
         if analysed[1]['failed']:
             module.fail_json(**result)
