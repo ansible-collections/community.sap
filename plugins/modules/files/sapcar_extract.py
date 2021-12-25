@@ -140,10 +140,10 @@ def check_if_present(command, path, dest, signature, manifest, module):
     sar_files = [dest + x.split(" ")[-1] for x in sar_raw if x]
     # remove any SIGNATURE.SMF from list because it will not unpacked if signature is false
     if not signature:
-        sar_files = [item for item in sar_files if '.SMF' not in item]
+        sar_files = [item for item in sar_files if not item.endswith('.SMF')]
     # if signature is renamed manipulate files in list of sar file for compare.
     if manifest != "SIGNATURE.SMF":
-        sar_files = [item for item in sar_files if '.SMF' not in item]
+        sar_files = [item for item in sar_files if not item.endswith('.SMF')]
         sar_files = sar_files + [manifest]
     # get extracted files if present
     files_extracted = get_list_of_files(dest)
