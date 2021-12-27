@@ -136,7 +136,6 @@ author:
 '''
 
 EXAMPLES = r'''
-# Create a user
 - name: Create SAP User
   community.sap.sap_user:
     conn_username: 'DDIC'
@@ -155,8 +154,7 @@ EXAMPLES = r'''
     roles:
       - "SAP_ALL"
 
-# Force change user
-- name: Create SAP User
+- name: Force change SAP User
   community.sap.sap_user:
     conn_username: 'DDIC'
     conn_password: 'Test123'
@@ -175,8 +173,7 @@ EXAMPLES = r'''
     roles:
       - "SAP_ALL"
 
-# delete a user
-- name: Create SAP User
+- name: Delete SAP User
   community.sap.sap_user:
     conn_username: 'DDIC'
     conn_password: 'Test123'
@@ -187,8 +184,7 @@ EXAMPLES = r'''
     force: true
     username: ADMIN
 
-# unlock a user
-- name: Create SAP User
+- name: Unlock SAP User
   community.sap.sap_user:
     conn_username: 'DDIC'
     conn_password: 'Test123'
@@ -202,12 +198,12 @@ EXAMPLES = r'''
 
 RETURN = r'''
 msg:
-  description: A small execution description.
+  description: A small execution description about the user action.
   type: str
   returned: always
   sample: 'User ADMIN created'
 out:
-  description: A more detailed description.
+  description: A more detailed description about the user action.
   type: list
   elements: dict
   returned: on success
