@@ -203,7 +203,7 @@ msg:
   returned: always
   sample: 'User ADMIN created'
 out:
-  description: A more detailed description about the user action.
+  description: A detailed description about the user action.
   type: list
   elements: dict
   returned: on success
