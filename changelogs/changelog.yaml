@@ -1,11 +1,19 @@
 ancestor: null
 releases:
   0.1.0:
-    release_summary: Initial Release 
-    bug_fixes:
-      - 
+    changes:
+      release_summary: 'This is the minor release of the ``community.sap`` collection.
+        It is the initial relase for the ``community.sap`` collection'
+    fragments:
+    - 0.1.0.yml
     modules:
-      - sapcar_extract
-      - sap_task_list_execute
-      - hana_query
-    release_date: '2021-12-06'   
+    - description: Execute SQL on HANA
+      name: hana_query
+      namespace: database.saphana
+    - description: Perform SAP Task list execution
+      name: sap_task_list_execute
+      namespace: system
+    - description: Manages SAP SAPCAR archives
+      name: sapcar_extract
+      namespace: files
+    release_date: '2021-12-06'
