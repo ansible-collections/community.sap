@@ -125,7 +125,7 @@ def get_nw_nr(sids, module):
             instance_nr = instance[-2:]
             command = [module.get_bin_path('/usr/sap/hostctrl/exe/sapcontrol', required=True)]
             # check if returned instance_nr is a number because sapcontrol returns all if a random string is provided
-            if instance_nr.isnumeric():
+            if instance_nr.isdigit():
                 command.extend(['-nr', instance_nr, '-function', 'GetInstanceProperties'])
                 check_instance = module.run_command(command, check_rc=False)
                 if check_instance[0] != 1:
