@@ -69,7 +69,7 @@ class Testsap_system_facts(ModuleTestCase):
                         self.module.main()
         self.assertEqual(result.exception.args[0]['ansible_facts'], {'sap': [{"InstanceType": "HANA", "NR": "01", "SID": "HDB", "TYPE": "HDB"}]})
 
-    def test_sap_system_facts_command_nw(self):
+    def test_sap_system_facts_pas_nw(self):
         """Check that result for NW is correct."""
         with patch.object(self.module, 'get_all_nw_sid') as mock_all_nw_sid:
             mock_all_nw_sid.return_value = ['ABC']
@@ -81,19 +81,19 @@ class Testsap_system_facts(ModuleTestCase):
                         self.module.main()
         self.assertEqual(result.exception.args[0]['ansible_facts'], {'sap': [{'InstanceType': 'NW', 'NR': '00', 'SID': 'ABC', 'TYPE': 'PAS'}]})
 
-    def test_sap_system_facts_command_nw(self):
+    def test_sap_system_facts_future_nw(self):
         """Check that future apps for NW are correct handled."""
         with patch.object(self.module, 'get_all_nw_sid') as mock_all_nw_sid:
             mock_all_nw_sid.return_value = ['ABC']
             with patch.object(self.module.os, 'listdir') as mock_listdir:
-                mock_listdir.return_value = ['AP00']
+                mock_listdir.return_value = ['XY00']
                 with patch.object(basic.AnsibleModule, 'run_command') as run_command:
-                    run_command.return_value = [0, 'SAP\nINSTANCE_NAME, Attribute, AP00\nSAP', '']
+                    run_command.return_value = [0, 'SAP\nINSTANCE_NAME, Attribute, XY00\nSAP', '']
                     with self.assertRaises(AnsibleExitJson) as result:
                         self.module.main()
         self.assertEqual(result.exception.args[0]['ansible_facts'], {'sap': [{'InstanceType': 'NW', 'NR': '00', 'SID': 'ABC', 'TYPE': 'XXX'}]})
 
-    def test_sap_system_facts_command_nw(self):
+    def test_sap_system_facts_wd_nw(self):
         """Check that WD for NW is correct handled."""
         with patch.object(self.module, 'get_all_nw_sid') as mock_all_nw_sid:
             mock_all_nw_sid.return_value = ['ABC']
