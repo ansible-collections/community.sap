@@ -74,9 +74,33 @@ class Testsap_system_facts(ModuleTestCase):
         with patch.object(self.module, 'get_all_nw_sid') as mock_all_nw_sid:
             mock_all_nw_sid.return_value = ['ABC']
             with patch.object(self.module.os, 'listdir') as mock_listdir:
-                mock_listdir.return_value = ['ASCS00']
+                mock_listdir.return_value = ['D00']
                 with patch.object(basic.AnsibleModule, 'run_command') as run_command:
                     run_command.return_value = [0, 'SAP\nINSTANCE_NAME, Attribute, D00\nSAP', '']
                     with self.assertRaises(AnsibleExitJson) as result:
                         self.module.main()
         self.assertEqual(result.exception.args[0]['ansible_facts'], {'sap': [{'InstanceType': 'NW', 'NR': '00', 'SID': 'ABC', 'TYPE': 'PAS'}]})
+
+    def test_sap_system_facts_command_nw(self):
+        """Check that future apps for NW are correct handled."""
+        with patch.object(self.module, 'get_all_nw_sid') as mock_all_nw_sid:
+            mock_all_nw_sid.return_value = ['ABC']
+            with patch.object(self.module.os, 'listdir') as mock_listdir:
+                mock_listdir.return_value = ['AP00']
+                with patch.object(basic.AnsibleModule, 'run_command') as run_command:
+                    run_command.return_value = [0, 'SAP\nINSTANCE_NAME, Attribute, AP00\nSAP', '']
+                    with self.assertRaises(AnsibleExitJson) as result:
+                        self.module.main()
+        self.assertEqual(result.exception.args[0]['ansible_facts'], {'sap': [{'InstanceType': 'NW', 'NR': '00', 'SID': 'ABC', 'TYPE': 'XXX'}]})
+
+    def test_sap_system_facts_command_nw(self):
+        """Check that WD for NW is correct handled."""
+        with patch.object(self.module, 'get_all_nw_sid') as mock_all_nw_sid:
+            mock_all_nw_sid.return_value = ['ABC']
+            with patch.object(self.module.os, 'listdir') as mock_listdir:
+                mock_listdir.return_value = ['WD80']
+                with patch.object(basic.AnsibleModule, 'run_command') as run_command:
+                    run_command.return_value = [0, 'SAP\nINSTANCE_NAME, Attribute, WD80\nSAP', '']
+                    with self.assertRaises(AnsibleExitJson) as result:
+                        self.module.main()
+        self.assertEqual(result.exception.args[0]['ansible_facts'], {'sap': [{'InstanceType': 'NW', 'NR': '80', 'SID': 'ABC', 'TYPE': 'WebDisp'}]})
