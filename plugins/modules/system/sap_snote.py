@@ -149,7 +149,7 @@ def call_rfc_method(connection, method_name, kwargs):
 def check_implementation(conn, snote):
     check_implemented = call_rfc_method(conn, 'SCWB_API_GET_NOTES_IMPLEMENTED', {})
     for snote_list in check_implemented['ET_NOTES_IMPL']:
-        if snote in snote_list['NUMM']:
+        if snote == snote_list['NUMM']:
             return True
         else:
             return False
