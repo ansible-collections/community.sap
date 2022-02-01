@@ -80,8 +80,6 @@ def get_all_hana_sid():
                 hana_sid = hana_sid + [sid]
     if hana_sid:
         return hana_sid
-    else:
-        return None
 
 
 def get_all_nw_sid():
@@ -98,8 +96,6 @@ def get_all_nw_sid():
                     nw_sid = nw_sid + [sid]
     if nw_sid:
         return nw_sid
-    else:
-        return None
 
 
 def get_hana_nr(sids, module):
