@@ -34,7 +34,8 @@ ansible_facts:
   contains:
     sap:
       description: Facts about the running SAP system.
-      type: str
+      type: list
+      elements: dict
       returned: when SAP system fact is present
       sample: [
         {
