@@ -10,21 +10,20 @@ DOCUMENTATION = r'''
 ---
 module: sap_company
 
-short_description: This module will manage a company entities in a SAP S4HANA environment.
+short_description: This module will manage a company entities in a SAP S4HANA environment
 
-version_added: "0.2.0"
+version_added: "1.0.0"
 
 description:
-    - The C(sap_user) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
-        Depending on distribution you are using, you may need to install additional packages to
-        have these available.
+    - The M(community.sap.sap_user) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
+      Depending on distribution you are using, you may need to install additional packages to
+      have these available.
     - This module will use the company BAPIs C(BAPI_COMPANY_CLONE) and C(BAPI_COMPANY_DELETE) to manage company entities.
 
 options:
     state:
         description:
         - The decision what to do with the company.
-        - Could be C('present'), C('absent')
         default: 'present'
         choices:
         - 'present'
@@ -70,7 +69,7 @@ options:
         required: false
         type: str
     country:
-        description: The country code for the company. E.g. C('DE')
+        description: The country code for the company. For example, C('DE').
         required: false
         type: str
     time_zone:
@@ -86,7 +85,7 @@ options:
         required: false
         type: str
     street:
-        description: Street where the company is located
+        description: Street where the company is located.
         required: false
         type: str
     street_no:
@@ -103,54 +102,50 @@ requirements:
 
 author:
     - Rainer Leber (@rainerleber)
+
+notes:
+    - Does not support C(check_mode).
 '''
 
 EXAMPLES = r'''
-- name: test company module
-  hosts: localhost
-  tasks:
-  - name: Create SAP Company
-    community.sap.sap_company:
-      conn_username: 'DDIC'
-      conn_password: 'HECtna2021#'
-      host: 100.0.201.20
-      sysnr: '01'
-      client: '000'
-      state: present
-      company_id: "Comp_ID"
-      name: "Test_comp"
-      name_2: "LTD"
-      country: "DE"
-      time_zone: "UTC"
-      city: "City"
-      post_code: "12345"
-      street: "test_street"
-      street_no: "1"
-      e_mail: "test@test.de"
+- name: Create SAP Company
+  community.sap.sap_company:
+    conn_username: 'DDIC'
+    conn_password: 'HECtna2021#'
+    host: 100.0.201.20
+    sysnr: '01'
+    client: '000'
+    state: present
+    company_id: "Comp_ID"
+    name: "Test_comp"
+    name_2: "LTD"
+    country: "DE"
+    time_zone: "UTC"
+    city: "City"
+    post_code: "12345"
+    street: "test_street"
+    street_no: "1"
+    e_mail: "test@test.de"
 
 # pass in a message and have changed true
-- name: test company module
-  hosts: localhost
-  tasks:
-  - name: delete SAP Company
-    community.sap.sap_company:
-      conn_username: 'DDIC'
-      conn_password: 'HECtna2021#'
-      host: 100.0.201.20
-      sysnr: '01'
-      client: '000'
-      state: absent
-      company_id: "Comp_ID"
-      name: "Test_comp"
-      name_2: "LTD"
-      country: "DE"
-      time_zone: "UTC"
-      city: "City"
-      post_code: "12345"
-      street: "test_street"
-      street_no: "1"
-      e_mail: "test@test.de"
-
+- name: Delete SAP Company
+  community.sap.sap_company:
+    conn_username: 'DDIC'
+    conn_password: 'HECtna2021#'
+    host: 100.0.201.20
+    sysnr: '01'
+    client: '000'
+    state: absent
+    company_id: "Comp_ID"
+    name: "Test_comp"
+    name_2: "LTD"
+    country: "DE"
+    time_zone: "UTC"
+    city: "City"
+    post_code: "12345"
+    street: "test_street"
+    street_no: "1"
+    e_mail: "test@test.de"
 '''
 
 RETURN = r'''

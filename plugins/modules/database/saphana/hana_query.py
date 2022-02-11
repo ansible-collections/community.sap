@@ -26,14 +26,15 @@ options:
         type: str
         required: true
     user:
-        description: A dedicated username. The user could be also in hdbuserstore. Defaults to C(SYSTEM).
+        description: A dedicated username. The user could be also in hdbuserstore.
         type: str
         default: SYSTEM
     userstore:
-        description: If C(true) the user must be in hdbuserstore.
+        description: If C(true), the user must be in hdbuserstore.
         type: bool
         default: false
         version_added: 3.5.0
+        version_added_collection: 'community.general'
     password:
         description:
           - The password to connect to the database.
@@ -46,13 +47,13 @@ options:
         type: bool
         default: true
     host:
-        description: The Host IP address. The port can be defined as well.
+        description: The Host IP address. The port can be defined as well. HOW?
         type: str
     database:
         description: Define the database on which to connect.
         type: str
     encrypted:
-        description: Use encrypted connection. Defaults to C(false).
+        description: Use encrypted connection.
         type: bool
         default: false
     filepath:
@@ -69,7 +70,7 @@ options:
         type: list
         elements: str
 notes:
-    - Does not support C(check_mode).
+    - Does not support C(check_mode). Always reports that the state has changed even if no changes have been made.
 author:
     - Rainer Leber (@rainerleber)
 '''
@@ -80,7 +81,7 @@ EXAMPLES = r'''
     sid: "hdb"
     instance: "01"
     password: "Test123"
-    query: "select user_name from users"
+    query: select user_name from users
 
 - name: Run several queries
   community.sap.hana_query:
@@ -88,8 +89,8 @@ EXAMPLES = r'''
     instance: "01"
     password: "Test123"
     query:
-    - "select user_name from users;"
-    - select * from SYSTEM;
+    - select user_name from users
+    - select * from SYSTEM
     host: "localhost"
     autocommit: False
 
@@ -99,8 +100,8 @@ EXAMPLES = r'''
     instance: "01"
     password: "Test123"
     query:
-    - "select user_name from users;"
-    - select * from users;
+    - select user_name from users
+    - select * from users
     host: "localhost"
     autocommit: False
 
@@ -121,8 +122,8 @@ EXAMPLES = r'''
     user: hdbstoreuser
     userstore: true
     query:
-    - "select user_name from users;"
-    - select * from users;
+    - select user_name from users
+    - select * from users
     autocommit: False
 '''
 

@@ -22,16 +22,16 @@ options:
   dest:
     description:
       - The destination where SAPCAR extracts the SAR file. Missing folders will be created.
-        If this parameter is not provided it will unpack in the same folder as the SAR file.
+        If this parameter is not provided, it will unpack in the same folder as the SAR file.
     type: path
   binary_path:
     description:
       - The path to the SAPCAR binary, for example, C(/home/dummy/sapcar) or C(https://myserver/SAPCAR).
-        If this parameter is not provided the module will look in C(PATH).
+        If this parameter is not provided, the module will look in C(PATH).
     type: path
   signature:
     description:
-      - If C(true) the signature will be extracted.
+      - If C(true), the signature will be extracted.
     default: false
     type: bool
   security_library:
@@ -45,7 +45,7 @@ options:
     type: str
   remove:
     description:
-      - If C(true) the SAR/CAR file will be removed. B(This should be used with caution!)
+      - If C(true), the SAR/CAR file will be removed. B(This should be used with caution!)
     default: false
     type: bool
 author:
@@ -131,7 +131,7 @@ def download_SAPCAR(binary_path, module):
 
 
 def check_if_present(command, path, dest, signature, manifest, module):
-    # manipuliating output from SAR file for compare with already extracted files
+    # manipulating output from SAR file for compare with already extracted files
     iter_command = [command, '-tvf', path]
     sar_out = module.run_command(iter_command)[1]
     sar_raw = sar_out.split("\n")[1:]
@@ -207,7 +207,7 @@ def main():
         changed = True
     else:
         changed = False
-        out = "allready unpacked"
+        out = "already unpacked"
 
     if remove:
         os.remove(path)

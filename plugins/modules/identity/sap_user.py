@@ -9,10 +9,10 @@ __metaclass__ = type
 DOCUMENTATION = r'''
 ---
 module: sap_user
-short_description: This module will manage a user entities in a SAP S4/HANA environment.
-version_added: "0.2.0"
+short_description: This module will manage a user entities in a SAP S4/HANA environment
+version_added: "1.0.0"
 description:
-  - The C(sap_user) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
+  - The M(community.sap.sap_user) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
     Depending on distribution you are using, you may need to install additional packages to
     have these available.
   - This module will use the following user BAPIs to manage user entities.
@@ -27,8 +27,7 @@ description:
 options:
     state:
         description:
-          - The decission what to do with the user.
-          - Could be C('present'), C('absent'), C('lock'), C('unlock')
+          - The decision what to do with the user.
         default: 'present'
         choices:
           - 'present'
@@ -100,8 +99,9 @@ options:
     user_type:
         description:
           - The type for the user in the SAP system.
-          - C('A') Dialog user, C('B') System User, C('C') Communication User, C('S') Service User, C('L') Reference User
-          - Must be uppercase
+          - C('A') Dialog user, C('B') System User, C('C') Communication User,
+            C('S') Service User, C('L') Reference User.
+          - Must be in uppercase.
         type: str
         required: false
         default: 'A'
@@ -115,8 +115,7 @@ options:
     profiles:
         description:
           - Assign profiles to the user.
-          - Should be uppercase
-          - for example C('SAP_NEW') or C('SAP_ALL')
+          - Should be in uppercase, for example C('SAP_NEW') or C('SAP_ALL').
         type: list
         elements: str
         default: ['']
@@ -133,6 +132,8 @@ requirements:
     - pyrfc >= 2.4.0
 author:
     - Rainer Leber (@rainerleber)
+notes:
+    - Does not support C(check_mode).
 '''
 
 EXAMPLES = r'''
@@ -379,7 +380,7 @@ def run_module():
             host=dict(type='str', required=True),
             sysnr=dict(type='str', default="00"),
             client=dict(type='str', default="000"),
-            # values for the new or exsisting user
+            # values for the new or existing user
             username=dict(type='str', required=True),
             firstname=dict(type='str', required=False),
             lastname=dict(type='str', required=False),
