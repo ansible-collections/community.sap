@@ -20,7 +20,7 @@ If you encounter abusive behavior, please refer to the [policy violations](https
 
 We announce releases and important changes through Ansible's [The Bullhorn newsletter](https://github.com/ansible/community/wiki/News#the-bullhorn). Be sure you are [subscribed](https://eepurl.com/gZmiEP).
 
-Join us in the `#ansible` (general use questions and support), `#ansible-community` (community and collection development questions), and other [IRC channels](https://docs.ansible.com/ansible/devel/community/communication.html#irc-channels).
+Join us in the `#ansible` (general use questions and support), `#ansible-community` (community and collection development questions), and other [Matrix/LiberaChat IRC channels](https://docs.ansible.com/ansible/devel/community/communication.html#real-time-chat).
 
 We take part in the global quarterly [Ansible Contributor Summit](https://github.com/ansible/community/wiki/Contributor-Summit) virtually or in-person. Track [The Bullhorn newsletter](https://eepurl.com/gZmiEP) and join us.
 
@@ -67,6 +67,7 @@ Every voice is important. If you have something on your mind, create an issue or
 - 2.11
 - 2.12
 - devel
+
 ## External requirements
 
 For some modules the below requirements are needed on the host that executes a module.
@@ -131,9 +132,9 @@ Please have a look at the project board.
 - [Ansible User guide](https://docs.ansible.com/ansible/devel/user_guide/index.html)
 - [Ansible Developer guide](https://docs.ansible.com/ansible/devel/dev_guide/index.html)
 - [Ansible Collections Checklist](https://github.com/ansible-collections/overview/blob/master/collection_requirements.rst)
-- [Ansible Community code of conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html)
+- [Ansible Community Code of Conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html)
 - [The Bullhorn (the Ansible Contributor newsletter)](https://us19.campaign-archive.com/home/?u=56d874e027110e35dea0e03c1&id=d6635f5420)
-- [Changes impacting Contributors](https://github.com/ansible-collections/overview/issues/45)
+- [News for Maintainers](https://github.com/ansible-collections/news-for-maintainers)
 
 ## Licensing
 
