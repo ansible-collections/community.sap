@@ -33,8 +33,6 @@ options:
         description: If C(true), the user must be in hdbuserstore.
         type: bool
         default: false
-        version_added: 3.5.0
-        version_added_collection: 'community.general'
     password:
         description:
           - The password to connect to the database.
