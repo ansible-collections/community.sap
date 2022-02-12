@@ -1,1 +1,0 @@
-plugins/modules/database/saphana/hana_query.py validate-modules:invalid-documentation
