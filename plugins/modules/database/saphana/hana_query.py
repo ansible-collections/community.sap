@@ -45,7 +45,7 @@ options:
         type: bool
         default: true
     host:
-        description: The Host IP address. The port can be defined as well. HOW?
+        description: The Host IP address. The port can be defined as well.
         type: str
     database:
         description: Define the database on which to connect.
@@ -75,6 +75,14 @@ author:
 
 EXAMPLES = r'''
 - name: Simple select query
+  community.sap.hana_query:
+    sid: "hdb"
+    instance: "01"
+    password: "Test123"
+    host: "10.10.2.4:30001"
+    query: select user_name from users
+    
+- name: RUN select query with host port
   community.sap.hana_query:
     sid: "hdb"
     instance: "01"
