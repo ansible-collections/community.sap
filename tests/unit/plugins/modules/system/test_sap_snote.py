@@ -35,7 +35,7 @@ class TestSAPRfcModule(ModuleTestCase):
         """tests fail module error"""
 
         set_module_args({
-            "conn_username": "DDIC",
+            "conn_username": "ADMIN",
             "conn_password": "Test1234",
             "host": "10.1.8.9",
             "snote_path": "/user/sap/trans/temp/000123456.txt"
@@ -50,7 +50,7 @@ class TestSAPRfcModule(ModuleTestCase):
         """tests fail module error"""
 
         set_module_args({
-            "conn_username": "DDIC",
+            "conn_username": "ADMIN",
             "conn_password": "Test1234",
             "host": "10.1.8.9",
             "snote_path": "/user/sap/trans/temp/000123456.txt"
@@ -64,7 +64,7 @@ class TestSAPRfcModule(ModuleTestCase):
         """tests fail wrong path extension"""
 
         set_module_args({
-            "conn_username": "DDIC",
+            "conn_username": "ADMIN",
             "conn_password": "Test1234",
             "host": "10.1.8.9",
             "snote_path": "/user/sap/trans/temp/000123456_00.tx"
@@ -74,11 +74,25 @@ class TestSAPRfcModule(ModuleTestCase):
             self.module.main()
         self.assertEqual(result.exception.args[0]['msg'], 'The path must include the extracted snote file and ends with txt.')
 
+    def test_error_wrong_user(self):
+        """tests fail wrong path extension"""
+
+        set_module_args({
+            "conn_username": "DDIC",
+            "conn_password": "Test1234",
+            "host": "10.1.8.9",
+            "snote_path": "/user/sap/trans/temp/000123456_00.tx"
+        })
+
+        with self.assertRaises(AnsibleFailJson) as result:
+            self.module.main()
+        self.assertEqual(result.exception.args[0]['msg'], 'The user could not be C(DDIC) or C(SAP*) to integrate SNOTES.')
+
     def test_success_absent(self):
         """test absent execute snote"""
 
         set_module_args({
-            "conn_username": "DDIC",
+            "conn_username": "ADMIN",
             "conn_password": "Test1234",
             "host": "10.1.8.9",
             "state": "absent",
@@ -96,7 +110,7 @@ class TestSAPRfcModule(ModuleTestCase):
         """test absent execute snote"""
 
         set_module_args({
-            "conn_username": "DDIC",
+            "conn_username": "ADMIN",
             "conn_password": "Test1234",
             "host": "10.1.8.9",
             "state": "absent",
@@ -114,7 +128,7 @@ class TestSAPRfcModule(ModuleTestCase):
         """test nothing to do"""
 
         set_module_args({
-            "conn_username": "DDIC",
+            "conn_username": "ADMIN",
             "conn_password": "Test1234",
             "host": "10.1.8.9",
             "state": "present",
@@ -130,7 +144,7 @@ class TestSAPRfcModule(ModuleTestCase):
         """test present execute snote"""
 
         set_module_args({
-            "conn_username": "DDIC",
+            "conn_username": "ADMIN",
             "conn_password": "Test1234",
             "host": "10.1.8.9",
             "state": "present",
@@ -150,7 +164,7 @@ class TestSAPRfcModule(ModuleTestCase):
         """test present implement snote"""
 
         set_module_args({
-            "conn_username": "DDIC",
+            "conn_username": "ADMIN",
             "conn_password": "Test1234",
             "host": "10.1.8.9",
             "state": "present",

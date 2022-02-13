@@ -12,7 +12,7 @@ module: sap_snote
 
 short_description: This module will upload and (de)implements C(SNOTES) in a SAP S4HANA environment.
 
-version_added: "0.2.0"
+version_added: "1.0.0"
 
 description:
     - The C(sap_snote) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
@@ -20,7 +20,7 @@ description:
         have these available.
     - This module will use the Function Group C(SCWB_API).
     - The C(TMS) must be configured at first.
-    - The user could not be C(DDIC) or C(SAP).
+    - The user could not be C(DDIC) or C(SAP*) to integrate SNOTES.
 options:
     state:
         description:
@@ -88,7 +88,7 @@ EXAMPLES = r'''
     community.sap.sap_snote:
       conn_username: 'DDIC'
       conn_password: 'Passwd1234'
-      host: 100.0.201.20
+      host: 192.168.1.100
       sysnr: '01'
       client: '000'
       state: present
@@ -101,7 +101,7 @@ EXAMPLES = r'''
     community.sap.sap_snote:
       conn_username: 'DDIC'
       conn_password: 'Passwd1234'
-      host: 100.0.201.20
+      host: 192.168.1.100
       sysnr: '01'
       client: '000'
       state: absent
@@ -131,6 +131,7 @@ out:
 '''
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
+from os import path as os_path
 import traceback
 try:
     from pyrfc import Connection
@@ -190,6 +191,10 @@ def run_module():
             msg=missing_required_lib('pyrfc'),
             exception=ANOTHER_LIBRARY_IMPORT_ERROR)
 
+    if conn_username == "DDIC" or conn_username == "SAP*":
+        result['msg'] = 'The user could not be C(DDIC) or C(SAP*) to integrate SNOTES.'
+        module.fail_json(**result)
+
     # basic RFC connection with pyrfc
     try:
         conn = Connection(user=conn_username, passwd=conn_password, ashost=host, sysnr=sysnr, client=client)
@@ -202,7 +207,7 @@ def run_module():
     if path is not None:
         if path.endswith('.txt'):
             # splits snote number from path and txt extension
-            snote = path.split('/')[-1].split('.')[0]
+            snote = os_path.basename(os_path.normpath(path)).split('.')[0]
         else:
             result['msg'] = 'The path must include the extracted snote file and ends with txt.'
             module.fail_json(**result)
@@ -224,7 +229,7 @@ def run_module():
         queued = call_rfc_method(conn, 'SCWB_API_CINST_QUEUE_GET', {})
 
         if queued['ET_MANUAL_ACTIVITIES']:
-            raw_queue = call_rfc_method(conn, 'SCWB_API_CONFIRM_MAN_ACTIVITY', {})
+            raw = call_rfc_method(conn, 'SCWB_API_CONFIRM_MAN_ACTIVITY', {})
 
     if raw:
         if raw['EV_RC'] == 0:
@@ -236,8 +241,8 @@ def run_module():
                 result['changed'] = True
                 result['msg'] = 'SNOTE "{0}" deimplemented.'.format(snote)
         else:
-            module.fail_json(**result)
             result['msg'] = "Something went wrong."
+            module.fail_json(**result)
         result['out'] = raw
     else:
         result['msg'] = "Nothing to do."
