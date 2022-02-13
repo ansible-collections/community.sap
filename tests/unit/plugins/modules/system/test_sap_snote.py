@@ -86,7 +86,7 @@ class TestSAPRfcModule(ModuleTestCase):
 
         with self.assertRaises(AnsibleFailJson) as result:
             self.module.main()
-        self.assertEqual(result.exception.args[0]['msg'], 'The user could not be C(DDIC) or C(SAP*) to integrate SNOTES.')
+        self.assertEqual(result.exception.args[0]['msg'], 'User C(DDIC) or C(SAP*) not allowed for this operation.')
 
     def test_success_absent(self):
         """test absent execute snote"""

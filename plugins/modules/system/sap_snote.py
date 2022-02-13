@@ -20,7 +20,7 @@ description:
         have these available.
     - This module will use the Function Group C(SCWB_API).
     - The C(TMS) must be configured at first.
-    - The user could not be C(DDIC) or C(SAP*) to integrate SNOTES.
+    - Integrating SNOTES cannot be done via C(DDIC)- or C(SAP*)-User.
 options:
     state:
         description:
@@ -192,7 +192,7 @@ def run_module():
             exception=ANOTHER_LIBRARY_IMPORT_ERROR)
 
     if conn_username == "DDIC" or conn_username == "SAP*":
-        result['msg'] = 'The user could not be C(DDIC) or C(SAP*) to integrate SNOTES.'
+        result['msg'] = 'User C(DDIC) or C(SAP*) not allowed for this operation.'
         module.fail_json(**result)
 
     # basic RFC connection with pyrfc
