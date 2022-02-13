@@ -180,7 +180,7 @@ def run_module():
     conn_username = (params['conn_username']).upper()
     conn_password = params['conn_password']
     host = params['host']
-    sysnr = params['sysnr']
+    sysnr = (params['sysnr']).zfill(2)
     client = params['client']
 
     path = params['snote_path']
