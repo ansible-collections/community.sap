@@ -79,14 +79,14 @@ EXAMPLES = r'''
     sid: "hdb"
     instance: "01"
     password: "Test123"
-    host: "10.10.2.4:30001"
     query: select user_name from users
-    
+
 - name: RUN select query with host port
   community.sap.hana_query:
     sid: "hdb"
     instance: "01"
     password: "Test123"
+    host: "10.10.2.4:30001"
     query: select user_name from users
 
 - name: Run several queries
