@@ -11,13 +11,16 @@ module: sap_system_facts
 
 short_description: Gathers SAP facts in a host
 
-version_added: "0.2.0"
+version_added: "1.0.0"
 
 description:
     - This facts module gathers SAP system facts about the running instance.
 
 author:
     - Rainer Leber (@rainerleber)
+
+notes:
+    - Supports C(check_mode).
 '''
 
 EXAMPLES = r'''
@@ -26,17 +29,19 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
-# These are examples of possible return values, and in general should use other names for return values.
+# These are examples of possible return values,
+# and in general should use other names for return values.
 ansible_facts:
   description: Facts to add to ansible_facts.
   returned: always
   type: list
+  elements: dict
   contains:
     sap:
       description: Facts about the running SAP system.
       type: list
       elements: dict
-      returned: when SAP system fact is present
+      returned: When SAP system fact is present
       sample: [
         {
             "InstanceType": "NW",
@@ -62,21 +67,20 @@ ansible_facts:
             "SID": "WEB",
             "TYPE": "WebDisp"
         }
-        ]
+      ]
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.common.text.converters import to_native
 import os
 import re
 
 
 def get_all_hana_sid():
     hana_sid = list()
-    if (os.path.isdir("/hana/shared")):
+    if os.path.isdir("/hana/shared"):
         # /hana/shared directory exists
         for sid in os.listdir('/hana/shared'):
-            if (os.path.isdir("/usr/sap/" + sid)):
+            if os.path.isdir("/usr/sap/" + sid):
                 hana_sid = hana_sid + [sid]
     if hana_sid:
         return hana_sid
@@ -84,14 +88,14 @@ def get_all_hana_sid():
 
 def get_all_nw_sid():
     nw_sid = list()
-    if (os.path.isdir("/sapmnt")):
+    if os.path.isdir("/sapmnt"):
         # /sapmnt directory exists
         for sid in os.listdir('/sapmnt'):
-            if (os.path.isdir("/usr/sap/" + sid)):
+            if os.path.isdir("/usr/sap/" + sid):
                 nw_sid = nw_sid + [sid]
             else:
                 # Check to see if /sapmnt/SID/sap_bobj exists
-                if (os.path.isdir("/sapmnt/" + sid + "/sap_bobj")):
+                if os.path.isdir("/sapmnt/" + sid + "/sap_bobj"):
                     # is a bobj system
                     nw_sid = nw_sid + [sid]
     if nw_sid:
@@ -104,7 +108,7 @@ def get_hana_nr(sids, module):
         for instance in os.listdir('/usr/sap/' + sid):
             if 'HDB' in instance:
                 instance_nr = instance[-2:]
-                # check if instance number exsists
+                # check if instance number exists
                 command = [module.get_bin_path('/usr/sap/hostctrl/exe/sapcontrol', required=True)]
                 command.extend(['-nr', instance_nr, '-function', 'GetProcessList'])
                 check_instance = module.run_command(command, check_rc=False)
@@ -137,22 +141,22 @@ def get_nw_nr(sids, module):
 
 
 def get_instance_type(raw_type):
-    if (raw_type[0] == "D"):
+    if raw_type[0] == "D":
         # It's a PAS
         type = "PAS"
-    elif (raw_type[0] == "A"):
+    elif raw_type[0] == "A":
         # It's an ASCS
         type = "ASCS"
-    elif (raw_type[0] == "W"):
+    elif raw_type[0] == "W":
         # It's a Webdisp
         type = "WebDisp"
-    elif (raw_type[0] == "J"):
+    elif raw_type[0] == "J":
         # It's a Java
         type = "Java"
-    elif (raw_type[0] == "S"):
+    elif raw_type[0] == "S":
         # It's an SCS
         type = "SCS"
-    elif (raw_type[0] == "E"):
+    elif raw_type[0] == "E":
         # It's an ERS
         type = "ERS"
     else:
@@ -172,7 +176,7 @@ def run_module():
 
     module = AnsibleModule(
         argument_spec=module_args,
-        supports_check_mode=True
+        supports_check_mode=True,
     )
 
     hana_sid = get_all_hana_sid()

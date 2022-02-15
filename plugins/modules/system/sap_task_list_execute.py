@@ -12,7 +12,7 @@ module: sap_task_list_execute
 short_description: Perform SAP Task list execution
 version_added: "0.1.0"
 description:
-  - The C(sap_task_list_execute) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
+  - The M(community.sap.sap_task_list_execute) module depends on C(pyrfc) Python library (version 2.4.0 and upwards).
     Depending on distribution you are using, you may need to install additional packages to
     have these available.
   - Tasks in the task list which requires manual activities will be confirmed automatically.
@@ -54,10 +54,10 @@ options:
   task_parameters:
     description:
       - The tasks and the parameters for execution.
-      - If the task list do not need any parameters. This could be empty.
-      - If only specific tasks from the task list should be executed.
-        The tasks even when no parameter is needed must be provided.
-        Alongside with the module parameter I(task_skip=true).
+      - If the task list does not need any parameters, this could be empty.
+      - If only specific tasks from the task list should be executed,
+        the tasks even when no parameter is needed must be provided
+        alongside with the module parameter I(task_skip=true).
     type: list
     elements: dict
     suboptions:
@@ -74,20 +74,20 @@ options:
   task_settings:
     description:
       - Setting for the execution of the task list. This can be the following as in TCODE SE80 described.
-          Check Mode C(CHECKRUN), Background Processing Active C(BATCH) (this is the default value),
-          Asynchronous Execution C(ASYNC), Trace Mode C(TRACE), Server Name C(BATCH_TARGET).
+        Check Mode C(CHECKRUN), Background Processing Active C(BATCH) (this is the default value),
+        Asynchronous Execution C(ASYNC), Trace Mode C(TRACE), Server Name C(BATCH_TARGET).
     default: ['BATCH']
     type: list
     elements: str
   task_skip:
     description:
-      - If this parameter is C(true) not defined tasks in I(task_parameters) are skipped.
+      - If this parameter is C(true), not defined tasks in I(task_parameters) are skipped.
       - This could be the case when only certain tasks should run from the task list.
     default: false
     type: bool
 
 notes:
-    - Does not support C(check_mode).
+    - Does not support C(check_mode). Always returns that the state has changed.
 author:
     - Rainer Leber (@rainerleber)
 '''
@@ -119,7 +119,7 @@ EXAMPLES = r'''
         VALUE: X
     task_settings: batch
 
-# Exported environement variables.
+# Exported environment variables
 - name: Hint if module will fail with error message like ImportError libsapnwrfc.so...
   community.sap.sap_task_list_execute:
     conn_username: DDIC
@@ -178,7 +178,6 @@ out:
 '''
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
-from ansible.module_utils.json_utils import json
 import traceback
 try:
     from pyrfc import Connection
@@ -283,7 +282,7 @@ def run_module():
                                      {'I_SCENARIO_ID': task_to_execute})
     except Exception as err:
         result['error'] = str(err)
-        result['msg'] = 'The task list does not exsist.'
+        result['msg'] = 'The task list does not exist.'
         module.fail_json(**result)
     exec_settings = process_exec_settings(task_settings)
     # initialize session task

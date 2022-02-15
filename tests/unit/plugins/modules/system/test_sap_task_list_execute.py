@@ -47,7 +47,7 @@ class TestSAPRfcModule(ModuleTestCase):
             conn.return_value = ''
             with self.assertRaises(AnsibleFailJson) as result:
                 self.module.main()
-            self.assertEqual(result.exception.args[0]['msg'], 'The task list does not exsist.')
+            self.assertEqual(result.exception.args[0]['msg'], 'The task list does not exist.')
 
     def test_success(self):
         """test execute task list success"""
