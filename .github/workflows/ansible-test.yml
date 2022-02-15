@@ -78,51 +78,49 @@ jobs:
             ansible.netcommon
             ansible.utils
 
-# If the application you are testing is available as a docker container and you want to test
-# multiple versions see the following for an example:
-# https://github.com/ansible-collections/community.zabbix/tree/master/.github/workflows
+# Please see the Readme why we disabled integration tests at the moment
 
-  integration:
-    runs-on: ubuntu-latest
-    name: I (Ⓐ${{ matrix.ansible }}+py${{ matrix.python }})
-    strategy:
-      fail-fast: false
-      matrix:
-        ansible:
-          - stable-2.9 # Only if your collection supports Ansible 2.9
-          - stable-2.10
-          - stable-2.11
-          - stable-2.12
-          - devel
-        python:
-          - 2.6
-          - 2.7
-          - 3.5
-          - 3.6
-          - 3.7
-          - 3.8
-          - 3.9
-        exclude:
-          # Because ansible-test doesn't support python3.9 for Ansible 2.9
-          - ansible: stable-2.9
-            python: 3.9
-          - ansible: devel
-            python: 2.6
+  # integration:
+  #   runs-on: ubuntu-latest
+  #   name: I (Ⓐ${{ matrix.ansible }}+py${{ matrix.python }})
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       ansible:
+  #         - stable-2.9 # Only if your collection supports Ansible 2.9
+  #         - stable-2.10
+  #         - stable-2.11
+  #         - stable-2.12
+  #         - devel
+  #       python:
+  #         - 2.6
+  #         - 2.7
+  #         - 3.5
+  #         - 3.6
+  #         - 3.7
+  #         - 3.8
+  #         - 3.9
+  #       exclude:
+  #         # Because ansible-test doesn't support python3.9 for Ansible 2.9
+  #         - ansible: stable-2.9
+  #           python: 3.9
+  #         - ansible: devel
+  #           python: 2.6
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v2
 
-      - name: Perform integration testing with ansible-test
-        uses: ansible-community/ansible-test-gh-action@release/v1
-        with:
-          ansible-core-version: ${{ matrix.ansible }}
-          python-version: 3.8
-          pre-test-cmd: >-
-            mkdir -p tests/output/
-            touch tests/output/coverage
-          target-python-version: ${{ matrix.python }}
-          testing-type: integration
-          test-deps: >-
-            ansible.netcommon
-            ansible.utils
+  #     - name: Perform integration testing with ansible-test
+  #       uses: ansible-community/ansible-test-gh-action@release/v1
+  #       with:
+  #         ansible-core-version: ${{ matrix.ansible }}
+  #         python-version: 3.8
+  #         pre-test-cmd: >-
+  #           mkdir -p tests/output/
+  #           touch tests/output/coverage
+  #         target-python-version: ${{ matrix.python }}
+  #         testing-type: integration
+  #         test-deps: >-
+  #           ansible.netcommon
+  #           ansible.utils

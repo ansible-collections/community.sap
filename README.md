@@ -20,7 +20,7 @@ If you encounter abusive behavior, please refer to the [policy violations](https
 
 We announce releases and important changes through Ansible's [The Bullhorn newsletter](https://github.com/ansible/community/wiki/News#the-bullhorn). Be sure you are [subscribed](https://eepurl.com/gZmiEP).
 
-Join us in the `#ansible` (general use questions and support), `#ansible-community` (community and collection development questions), and other [Matrix/LiberaChat IRC channels](https://docs.ansible.com/ansible/devel/community/communication.html#real-time-chat).
+Join us in the `#ansible` (general use questions and support), `#ansible-community` (community and collection development questions), and other [IRC channels](https://docs.ansible.com/ansible/devel/community/communication.html#irc-channels).
 
 We take part in the global quarterly [Ansible Contributor Summit](https://github.com/ansible/community/wiki/Contributor-Summit) virtually or in-person. Track [The Bullhorn newsletter](https://eepurl.com/gZmiEP) and join us.
 
@@ -60,20 +60,34 @@ The process of decision making in this collection is based on discussing and fin
 
 Every voice is important. If you have something on your mind, create an issue or dedicated discussion and let's discuss it!
 
-## Tested with Ansible
+## Tested with Ansible and the following Python versions
 
+Tested Ansible versions:
 - 2.9
 - 2.10
 - 2.11
 - 2.12
 - devel
 
+Tested Python versions:
+- 2.6
+- 2.7
+- 3.5
+- 3.6
+- 3.7
+- 3.8
+- 3.9
+
+In fact of SAP licensing and hardware requirements integration tests are hard to execute. 
+Until we found a solution or have some modules where we are able to execute integration test 
+we decided to disable these tests.
 ## External requirements
 
 For some modules the below requirements are needed on the host that executes a module.
 
 - pyrfc >= 2.4.0
 - SAPCAR
+- SAPCONTROL
 
 ### Supported connections
 <!-- Optional. If your collection supports only specific connection types (such as HTTPAPI, netconf, or others), list them here. -->
@@ -84,6 +98,10 @@ For some modules the below requirements are needed on the host that executes a m
   - [hana_query](https://docs.ansible.com/ansible/latest/collections/community/sap/hana_query.html)
   - [sap_task_list_execute](https://docs.ansible.com/ansible/latest/collections/community/sap/sap_task_list_execute.html)
   - [sapcar_extract](https://docs.ansible.com/ansible/latest/collections/community/sap/sapcar_extract.html)
+  - [sap_company](https://docs.ansible.com/ansible/latest/collections/community/sap/sap_company.html)
+  - [sap_snote](https://docs.ansible.com/ansible/latest/collections/community/sap/sap_snote.html)
+  - [sap_user](https://docs.ansible.com/ansible/latest/collections/community/sap/sap_user.html)
+  - [sap_system_facts](https://docs.ansible.com/ansible/latest/collections/community/sap/sap_system_facts.html)
 
 ## Using this collection
 
@@ -118,7 +136,18 @@ See [Ansible Using collections](https://docs.ansible.com/ansible/devel/user_guid
 
 ## Release notes
 
-See the [changelog](https://github.com/ansible-collections/REPONAMEHERE/tree/main/CHANGELOG.rst).
+See the [changelog](https://github.com/ansible-collections/community.sap/tree/main/CHANGELOG.rst).
+
+## Releasing, Versioning and Deprecation
+This collection follows Semantic Versioning. More details on versioning can be found in the Ansible docs.
+
+We plan to regularly release new minor or bugfix versions once new features or bugfixes have been implemented.
+
+Releasing the current major version happens from the main branch. We will create a stable-1 branch for 1.x.y versions once we start working on a 2.0.0 release, to allow backporting bugfixes and features from the 2.0.0 branch (main) to stable-1.
+
+For reference have a look at the issue [Releasing, Versioning and Deprecation](https://github.com/ansible-collections/community.sap/issues/4).
+
+
 
 ## Roadmap
 
@@ -132,9 +161,9 @@ Please have a look at the project board.
 - [Ansible User guide](https://docs.ansible.com/ansible/devel/user_guide/index.html)
 - [Ansible Developer guide](https://docs.ansible.com/ansible/devel/dev_guide/index.html)
 - [Ansible Collections Checklist](https://github.com/ansible-collections/overview/blob/master/collection_requirements.rst)
-- [Ansible Community Code of Conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html)
+- [Ansible Community code of conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html)
 - [The Bullhorn (the Ansible Contributor newsletter)](https://us19.campaign-archive.com/home/?u=56d874e027110e35dea0e03c1&id=d6635f5420)
-- [News for Maintainers](https://github.com/ansible-collections/news-for-maintainers)
+- [Changes impacting Contributors](https://github.com/ansible-collections/overview/issues/45)
 
 ## Licensing
 
