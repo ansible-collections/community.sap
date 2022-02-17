@@ -78,9 +78,10 @@ Tested Python versions:
 - 3.8
 - 3.9
 
-In fact of SAP licensing and hardware requirements integration tests are hard to execute. 
-Until we found a solution or have some modules where we are able to execute integration test 
-we decided to disable these tests.
+Due to SAP licensing and hardware requirements, integration tests are momentarily not feasible.
+The modules are tested manually against SAP systems until we found a solution or have some
+modules where we are able to execute integration test we decided to disable these tests.
+
 ## External requirements
 
 For some modules the below requirements are needed on the host that executes a module.

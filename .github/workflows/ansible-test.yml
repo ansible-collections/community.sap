@@ -78,7 +78,7 @@ jobs:
             ansible.netcommon
             ansible.utils
 
-# Please see the Readme why we disabled integration tests at the moment
+# Please consult the Readme for information on why we disabled integration tests temporarily.
 
   # integration:
   #   runs-on: ubuntu-latest
