@@ -32,13 +32,12 @@ RETURN = r'''
 # These are examples of possible return values,
 # and in general should use other names for return values.
 ansible_facts:
-  description: Facts to add to ansible_facts.
+  description: Facts about the running SAP systems.
   returned: always
-  type: list
-  elements: dict
+  type: dict
   contains:
     sap:
-      description: Facts about the running SAP system.
+      description: Facts about the running SAP systems.
       type: list
       elements: dict
       returned: When SAP system fact is present

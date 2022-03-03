@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - sap_system_facts - change element type to dict instead of list.
