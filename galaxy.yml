@@ -12,7 +12,7 @@ license_file: LICENSE
 tags:
   - sap
 repository: https://github.com/ansible-collections/community.sap
-documentation: https://github.com/ansible-collection/community.sap/tree/main/docs
+documentation: https://github.com/ansible-collection/community.sap
 homepage: https://github.com/ansible-collections/community.sap
 issues: https://github.com/ansible-collections/community.sap/issues
 build_ignore:

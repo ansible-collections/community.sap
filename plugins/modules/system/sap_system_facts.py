@@ -32,9 +32,8 @@ RETURN = r'''
 # These are examples of possible return values,
 # and in general should use other names for return values.
 ansible_facts:
-  description: Facts to add to ansible_facts.
   returned: always
-  type: list
+  type: dict
   elements: dict
   contains:
     sap:

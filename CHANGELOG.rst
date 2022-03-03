@@ -11,7 +11,7 @@ v1.0.0
 Release Summary
 ---------------
 
-This is the fir major release of the ``community.sap`` collection.
+This is the first major release of the ``community.sap`` collection.
 This changelog contains all changes to the modules and plugins in this collection
 that have been made after the previous release.
 
