@@ -47,7 +47,7 @@ class TestSapcontrolModule(ModuleTestCase):
         self.assertEqual(result.exception.args[0]['exception'], 'Module not found')
 
     def test_error_connection(self):
-        """tests fail module error"""
+        """tests fail module exception"""
 
         set_module_args({
             "hostname": "192.168.8.15",

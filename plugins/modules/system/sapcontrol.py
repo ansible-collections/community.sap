@@ -360,9 +360,10 @@ def main():
 
     if port is None:
         try:
-            conn = connection(hostname, "5{0}14".format((sysnr).zfill(2)), username, password, function, parameter)
-        except ConnectionResetError:
-            conn = connection(hostname, "5{0}13".format((sysnr).zfill(2)), username, password, function, parameter)
+            try:
+                conn = connection(hostname, "5{0}14".format((sysnr).zfill(2)), username, password, function, parameter)
+            except Exception:
+                conn = connection(hostname, "5{0}13".format((sysnr).zfill(2)), username, password, function, parameter)
         except Exception as err:
             result['error'] = str(err)
     else:
