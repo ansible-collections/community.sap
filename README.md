@@ -1,5 +1,11 @@
-# Community SAP Collection
+# Deprecated Community SAP Collection
 
+# **This collection is deprecated, not maintained anymore and superseded by the collection [**community.sap_libs**](https://github.com/sap-linuxlab/community.sap_libs)**
+
+**Feel free to raise issues at the new place.
+All CI tests are diabled.**
+
+---
 This repository contains the community.sap Ansible Collection. The collection includes modules and plugins supported by the Ansible SAP community to help SAP landscape management.
 
 # SAP Collection for Ansible
