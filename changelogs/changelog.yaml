@@ -21,9 +21,9 @@ releases:
     changes:
       minor_changes:
       - sapcar_extract.py - more strict logic for filenames
-      release_summary: 'This is the first major release of the ``community.sap`` collection.
+      release_summary: This is the first major release of the ``community.sap`` collection.
         This changelog contains all changes to the modules and plugins in this collection
-        that have been made after the previous release.'
+        that have been made after the previous release.
     fragments:
     - 1.0.0.yml
     - 11-filenamesuffixcheck.yml
@@ -42,3 +42,22 @@ releases:
       name: sap_user
       namespace: identity
     release_date: '2022-02-17'
+  2.0.0:
+    changes:
+      deprecated_features:
+      - community.sap.hana_query - is deprecated in favor of community.sap_libs.sap_hdbsql
+      - community.sap.sap_company - is deprecated in favor of community.sap_libs.sap_company
+      - community.sap.sap_snote - is deprecated in favor of community.sap_libs.sap_snote
+      - community.sap.sap_task_list_execute - is deprecated in favor of community.sap_libs.sap_task_list_execute
+      - community.sap.sap_user - is deprecated in favor of community.sap_libs.sap_user
+      - community.sap.sapcar_extract - is deprecated in favor of community.sap_libs.sapcar_extract
+      major_changes:
+      - all modules - everything is now a redirect to the new collection community.sap_libs
+      release_summary: 'This release deprecates all modules and redirect them to community.sap_libs.
+        The modules are removed in this release.
+
+        The modules are available in the community.sap_libs repository.'
+    fragments:
+    - 0029-deprecation.yml
+    - 2.0.0.yml
+    release_date: '2023-07-14'
